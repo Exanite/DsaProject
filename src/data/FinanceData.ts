@@ -1,53 +1,66 @@
-import financeData from "@/assets/finance.json";
+import cleanedData from "@/assets/finance_cleaned.json";
 
 export interface FinanceDataEntry {
-
+  state: string,
+  year: number,
+  totals: {
+    capitalOutlay: number,
+    revenue: number,
+    generalRevenue: number,
+    expenditure: number,
+    generalExpenditure: number
+    insuranceTrustRevenue: number,
+    intergovernmental: number,
+    licenseTax: number,
+    selectiveSalesTax: number,
+    tax: number,
+    debtEndOfFiscalYear: number,
+  },
+  details: {
+    correction: {
+      correctionTotal: number
+    },
+    education: {
+      educationTotal: number
+    },
+    financialAid: {
+      assistanceAndSubsidies: number,
+      cashAndSecuritiesTotal: number
+    },
+    health: {
+      healthTotalExpenditure: number
+    },
+    intergovernmental: {
+      intergovernmentalCombinedAndUnallocable: number,
+      intergovernmentalExpenditure: number
+    },
+    naturalResources: {
+      parksTotalExpenditure: number,
+      naturalResourcesConstruction: number
+    },
+    utilities: {
+      utilitiesCurrentOperation: number
+    },
+    welfare: {
+      welfareInstitutionTotalExpenditure: number
+    },
+    transporation: {
+      highwaysTotalExpenditure: number
+    },
+    insuranceBenefitsAndRepayments: number,
+    interestOnDebt: number,
+    interestOnGeneralDebt: number,
+    miscellaneousGeneralRevenue: number
+    otherTaxes: number,
+    policeProtection: number,
+  },
 }
 
-export const FinanceData: FinanceDataEntry[] = financeData;
+export const FinanceData: FinanceDataEntry[] = cleanedData;
 
-//     "Details": {
-//       "Correction": {
-//         "Correction Total": 182698
-//       },
-//       "Education": {
-//         "Education Total": 3570524
-//       },
-//       "Financial Aid": {
-//         "Assistance and Subsidies": 273050,
-//         "Cash and Securities Total": 14594322
-//       },
-//       "Health": {
-//         "Health Total Expenditure": 394119
-//       },
-//       "Intergovernmental": {
-//         "Intergovernmental Expenditure": 2143312,
-//         "Intergovernmental to Combined and Unallocable": 518611
-//       },
-//       "Natural Resources": {
-//         "Natural Resources Construction": 151432,
-//         "Parks": {
-//           "Parks Total Expenditure": 9728
-//         }
-//       },
-//       "Utilities": {
-//         "Utilities Current Operation": 5564374
-//       },
-//       "Welfare": {
-//         "Welfare Institution Total Expenditure": 1853436
-//       },
-//       "Transportation": {
-//         "Highways": {
-//           "Highways Total Expenditure": 694874
-//         }
-//       },
-//       "Insurance benefits and repayments": 724852,
-//       "Interest on debt": 280179,
-//       "Interest on general debt": 280179,
-//       "Miscellaneous general revenue": 607453,
-//       "Other taxes": 205227,
-//       "Police protection": 77789
-
+/**
+ * Data transformation function used to clean up original data
+ */
 function query(data: any[]) {
   return data.map(d => {
     return {
