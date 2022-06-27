@@ -1,5 +1,7 @@
 import cleanedData from "@/assets/finance_cleaned.json";
 
+// Data is from https://think.cs.vt.edu/corgis/json/finance/
+
 export interface FinanceDataEntry {
   state: string,
   year: number,
