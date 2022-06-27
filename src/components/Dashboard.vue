@@ -102,6 +102,7 @@ const sidebarOpen = ref(false)
 
 
 import { defineComponent } from "vue";
+import 'zingchart/zingchart.min.js';
 
   export default defineComponent({
     name: "Dashboard",
