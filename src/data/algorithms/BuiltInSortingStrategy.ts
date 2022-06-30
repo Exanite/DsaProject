@@ -5,6 +5,6 @@ export const BuiltInSortingStrategy: SortingStrategy = {
   name: "Built In JS Sort",
 
   sort<T>(collection: T[], comparer: Comparer): T[] {
-    return collection.sort();
+    return collection.sort(comparer.compare.bind(comparer));
   }
 }
