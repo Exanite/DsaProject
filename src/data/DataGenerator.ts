@@ -1,7 +1,7 @@
 import { FinanceDataEntry } from "@/data/FinanceData";
 import { ValidStates } from "@/data/State";
 
-// Min inclusive, max exlusive
+// Min inclusive, max exclusive
 const getRandomInteger = (min: number = 0, max: number = 100000000): number => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
