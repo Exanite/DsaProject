@@ -17,4 +17,16 @@ for (const financeDatum of FinanceData) {
   }
 }
 
-console.log("Data is good");
+console.log("Validated finance data");
+
+// Todo Remove
+// const generator = new DataGenerator();
+// const comparer = new Comparer(["totals", "capitalOutlay"]);
+//
+// const a = generator.generate();
+// const b = generator.generate();
+//
+// console.log(a);
+// console.log(b);
+//
+// console.log(comparer.compare(a, b));
