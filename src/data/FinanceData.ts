@@ -1,5 +1,5 @@
 import cleanedData from "@/assets/finance_cleaned.json";
-import { State, ValidStates } from "@/data/State";
+import { State } from "@/data/State";
 
 // Data is from https://think.cs.vt.edu/corgis/json/finance/
 
