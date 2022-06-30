@@ -22,7 +22,7 @@
             Hello World
           </div>
           <nav class="mt-5 px-2 space-y-1">
-            <a v-for="item in nav" :key="item.name" href="#" class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
+            <a v-for="item in nav" :key="item.name" :href="item.href" class="bg-gray-900 text-white group flex items-center px-2 py-2 text-base font-medium rounded-md">
               <svg class="text-gray-300 mr-4 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon" />
               </svg>
@@ -47,13 +47,12 @@
           Home
         </div>
         <nav class="flex-1 px-2 space-y-1">
-          <a v-for="item in nav" :key="item.name" href="#" class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+          <a v-for="item in nav" :key="item.name" :href="item.href" class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
             <svg class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" :d="item.icon" />
             </svg>
             {{item.name}}
           </a>
-
         </nav>
       </div>
     </div>
@@ -95,8 +94,8 @@ import { ref } from 'vue'
 //icons: https://heroicons.com/
 const navigation = [
   { name: 'Home', href: '#', icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"},
-  { name: 'Page 1', href: '#', icon: "M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"},
-  { name: 'Page 2', href: '#', icon: "M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"}
+  { name: 'Page 1', href: '#/about', icon: "M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"},
+  { name: 'Page 2', href: '#/about', icon: "M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"}
 ]
 const sidebarOpen = ref(false)
 
