@@ -1,9 +1,10 @@
 import cleanedData from "@/assets/finance_cleaned.json";
+import { State, ValidStates } from "@/data/State";
 
 // Data is from https://think.cs.vt.edu/corgis/json/finance/
 
 export interface FinanceDataEntry {
-  state: string,
+  state: State,
   year: number,
   totals: {
     capitalOutlay: number,
@@ -58,7 +59,7 @@ export interface FinanceDataEntry {
   },
 }
 
-export const FinanceData: FinanceDataEntry[] = cleanedData;
+export const FinanceData: FinanceDataEntry[] = cleanedData as any;
 
 /**
  * Data transformation function used to clean up original data
