@@ -53,7 +53,6 @@
             </svg>
             {{item.name}}
           </a>
-
         </nav>
       </div>
     </div>
