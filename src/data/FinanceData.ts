@@ -1,5 +1,5 @@
 import cleanedData from "@/assets/finance_cleaned.json";
-import { State } from "@/data/State";
+import { State, ValidStates } from "@/data/State";
 
 // Data is from https://think.cs.vt.edu/corgis/json/finance/
 
@@ -59,7 +59,16 @@ export interface FinanceDataEntry {
   },
 }
 
-export const FinanceData: FinanceDataEntry[] = cleanedData as any;
+for (const financeDatum of (cleanedData as FinanceDataEntry[])) {
+  if (!ValidStates.includes(financeDatum.state)) {
+    throw new Error(financeDatum.state);
+  }
+}
+
+// Duplicate data to allow non-global mutations
+export const getFinanceData = (): FinanceDataEntry[] => {
+  return JSON.parse(JSON.stringify(cleanedData))
+};
 
 /**
  * Data transformation function used to clean up original data
