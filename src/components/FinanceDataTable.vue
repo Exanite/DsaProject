@@ -1,11 +1,16 @@
 <template>
+  <div>
+    <button v-on:click="generateData(10)">Generate 10 entries</button>
+    <button v-on:click="generateData(100)">Generate 100 entries</button>
+    <button v-on:click="generateData(1000)">Generate 1000 entries</button>
+  </div>
   <table>
     <tr>
       <th
-        v-for="(column, index) in columns" 
-        :key="column.name" 
-        v-on:click="() => onColumnSortClicked(index)"
+        v-for="(column, index) in columns"
+        :key="column.name"
         class="cursor-pointer"
+        v-on:click="() => onColumnSortClicked(index)"
       >
         {{ column.name }}
       </th>
@@ -19,6 +24,7 @@
 <script lang="ts">
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
   import { Comparer } from "@/data/comparers/Comparer";
+  import { DataGenerator } from "@/data/DataGenerator";
   import { FinanceDataEntry } from "@/data/FinanceData";
   import { computed, defineComponent, ref } from "vue";
 
@@ -83,7 +89,7 @@
 
         return sortingStrategy.sort(data.value, comparer);
       });
-      
+
       const onColumnSortClicked = (index: number) => {
         if (sortedColumn.value.index == index) {
           sortedColumn.value.descending = !sortedColumn.value.descending;
@@ -91,13 +97,20 @@
           sortedColumn.value = {
             index: index,
             descending: false,
-          }
+          };
         }
-      }
+      };
+
+      const generateData = (count: number) => {
+        const generator = new DataGenerator();
+
+        data.value = generator.generateCollection(count);
+      };
 
       return {
         columns: columns,
         data: sortedData,
+        generateData: generateData,
         onColumnSortClicked: onColumnSortClicked,
       };
     },
