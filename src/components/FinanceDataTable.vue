@@ -1,7 +1,12 @@
 <template>
   <table>
     <tr>
-      <th v-for="column in columns" :key="column.name">
+      <th
+        v-for="(column, index) in columns" 
+        :key="column.name" 
+        v-on:click="() => onColumnSortClicked(index)"
+        class="cursor-pointer"
+      >
         {{ column.name }}
       </th>
     </tr>
@@ -75,11 +80,23 @@
 
         return sortingStrategy.sort(data.value, comparer);
       });
+      
+      const onColumnSortClicked = (index: number) => {
+        if (sortedColumn.value.index == index) {
+          sortedColumn.value.descending = !sortedColumn.value.descending;
+        } else {
+          sortedColumn.value = {
+            index: index,
+            descending: false,
+          }
+        }
+      }
 
       return {
         columns: columns,
         data: sortedData,
         getValueByPath: getValueByPath,
+        onColumnSortClicked: onColumnSortClicked,
       };
     },
   });
