@@ -7,6 +7,16 @@ const getRandomInteger = (min: number = 0, max: number = 100000000): number => {
 };
 
 export class DataGenerator {
+  public generateCollection(count: number): FinanceDataEntry[] {
+    const results = [];
+
+    for (let i = 0; i < count; i++) {
+      results.push(this.generate());
+    }
+
+    return results;
+  }
+
   public generate(): FinanceDataEntry {
     return {
       state: ValidStates[getRandomInteger(0, ValidStates.length)],
