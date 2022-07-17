@@ -46,6 +46,10 @@
 
       const columns = ref<Column[]>([
         {
+          name: "ID",
+          path: ["id"],
+        },
+        {
           name: "Year",
           path: ["year"],
         },
