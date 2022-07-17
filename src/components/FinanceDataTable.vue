@@ -11,7 +11,7 @@
       </th>
     </tr>
     <tr v-for="datam in data" :key="datam.id">
-      <td v-for="column in columns" :key="column.name">{{ getValueByPath(datam, column.path) }}</td>
+      <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
     </tr>
   </table>
 </template>
@@ -20,12 +20,11 @@
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
   import { Comparer } from "@/data/comparers/Comparer";
   import { FinanceDataEntry } from "@/data/FinanceData";
-  import { getValueByPath } from "@/data/Utility";
   import { computed, defineComponent, ref } from "vue";
 
   interface Column {
     name: string,
-    path: string[],
+    getValue: (entry: FinanceDataEntry) => any,
   }
 
   interface SortedColumn {
@@ -47,23 +46,23 @@
       const columns = ref<Column[]>([
         {
           name: "ID",
-          path: ["id"],
+          getValue: entry => entry.id,
         },
         {
           name: "Year",
-          path: ["year"],
+          getValue: entry => entry.year,
         },
         {
           name: "State",
-          path: ["state"],
+          getValue: entry => entry.state,
         },
         {
           name: "Expenditure",
-          path: ["totals", "expenditure"],
+          getValue: entry => entry.totals.expenditure,
         },
         {
           name: "Revenue",
-          path: ["totals", "revenue"],
+          getValue: entry => entry.totals.revenue,
         },
       ]);
 
@@ -80,7 +79,7 @@
         }
 
         const sortingStrategy = BuiltInSortingStrategy;
-        const comparer = new Comparer(column.path, sortedColumn.value.descending);
+        const comparer = new Comparer(column.getValue, sortedColumn.value.descending);
 
         return sortingStrategy.sort(data.value, comparer);
       });
@@ -99,7 +98,6 @@
       return {
         columns: columns,
         data: sortedData,
-        getValueByPath: getValueByPath,
         onColumnSortClicked: onColumnSortClicked,
       };
     },
