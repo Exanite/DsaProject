@@ -11,21 +11,23 @@
 export class Comparer {
   constructor(
     public path: string[],
+    public descending: boolean = false,
   ) {
   }
   
   public compare(left: any, right: any): -1 | 0 | 1 {
     const leftValue = this.getValue(left);
     const rightValue = this.getValue(right);
-
-    console.log(leftValue);
-    console.log(rightValue);
     
     if (leftValue == rightValue || leftValue == undefined || rightValue == undefined) {
       return 0;
     }
     
-    return leftValue < rightValue ? -1 : 1;
+    if (this.descending) {
+      return leftValue > rightValue ? -1 : 1
+    } else {
+      return leftValue < rightValue ? -1 : 1
+    }
   }
   
   private getValue(entry: any): {} | undefined {

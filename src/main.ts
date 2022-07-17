@@ -1,6 +1,7 @@
 import App from "@/App.vue";
-import { FinanceData } from "@/data/FinanceData";
-import { ValidStates } from "@/data/State";
+import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
+import { Comparer } from "@/data/comparers/Comparer";
+import { DataGenerator } from "@/data/DataGenerator";
 import router from "@/router";
 import store from "@/store";
 import "@/styles/globals.css";
@@ -11,22 +12,12 @@ createApp(App)
   .use(router)
   .mount("#app");
 
-for (const financeDatum of FinanceData) {
-  if (!ValidStates.includes(financeDatum.state)) {
-    throw new Error(financeDatum.state);
-  }
-}
-
-console.log("Validated finance data");
-
 // Todo Remove
-// const generator = new DataGenerator();
-// const comparer = new Comparer(["totals", "capitalOutlay"]);
-//
-// const a = generator.generate();
-// const b = generator.generate();
-//
-// console.log(a);
-// console.log(b);
-//
-// console.log(comparer.compare(a, b));
+const generator = new DataGenerator();
+const comparer = new Comparer(["year"], true);
+
+const collection = generator.generateCollection(100);
+
+const sorted = BuiltInSortingStrategy.sort(collection, comparer);
+
+console.log(sorted);
