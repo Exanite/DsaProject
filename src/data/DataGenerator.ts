@@ -7,6 +7,8 @@ const getRandomInteger = (min: number = 0, max: number = 100000000): number => {
 };
 
 export class DataGenerator {
+  public currentId: number = 0;
+  
   public generateCollection(count: number): FinanceDataEntry[] {
     const results = [];
 
@@ -19,6 +21,7 @@ export class DataGenerator {
 
   public generate(): FinanceDataEntry {
     return {
+      id: this.currentId++,
       state: ValidStates[getRandomInteger(0, ValidStates.length)],
       year: getRandomInteger(1992, 2009 + 1),
       totals: {

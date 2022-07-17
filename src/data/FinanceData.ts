@@ -4,6 +4,7 @@ import { State, ValidStates } from "@/data/State";
 // Data is from https://think.cs.vt.edu/corgis/json/finance/
 
 export interface FinanceDataEntry {
+  id: number,
   state: State,
   year: number,
   totals: {
@@ -67,7 +68,13 @@ for (const financeDatum of (cleanedData as FinanceDataEntry[])) {
 
 // Duplicate data to allow non-global mutations
 export const getFinanceData = (): FinanceDataEntry[] => {
-  return JSON.parse(JSON.stringify(cleanedData))
+  const results: FinanceDataEntry[] = JSON.parse(JSON.stringify(cleanedData));
+
+  for (let i = 0; i < results.length; i++) {
+    results[i].id = i;
+  }
+  
+  return results;
 };
 
 /**

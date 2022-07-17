@@ -1,7 +1,18 @@
 <template>
-  <p>
-    {{ JSON.stringify(data)}}
-  </p>
+  <table>
+    <tr>
+      <th>Year</th>
+      <th>State</th>
+      <th>Expenditure</th>
+      <th>Revenue</th>
+    </tr>
+    <tr v-for="datam in data" :key="datam.id">
+      <td>{{ datam.year }}</td>
+      <td>{{ datam.state }}</td>
+      <td>{{ datam.totals.expenditure }}</td>
+      <td>{{ datam.totals.revenue }}</td>
+    </tr>
+  </table>
 </template>
 
 <script lang="ts">
@@ -14,12 +25,12 @@
       data: {
         type: Array as () => FinanceDataEntry[],
         required: true,
-      }
+      },
     },
     setup(props) {
       return {
         data: props.data,
-      }
-    }
+      };
+    },
   });
 </script>
