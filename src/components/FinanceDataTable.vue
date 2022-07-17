@@ -12,13 +12,20 @@
 </template>
 
 <script lang="ts">
+  import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
+  import { Comparer } from "@/data/comparers/Comparer";
   import { FinanceDataEntry } from "@/data/FinanceData";
   import { getValueByPath } from "@/data/Utility";
-  import { defineComponent, ref } from "vue";
+  import { computed, defineComponent, ref } from "vue";
 
   interface Column {
     name: string,
     path: string[],
+  }
+
+  interface SortedColumn {
+    index: number,
+    descending: boolean,
   }
 
   export default defineComponent({
@@ -30,6 +37,8 @@
       },
     },
     setup(props) {
+      const data = ref(props.data);
+
       const columns = ref<Column[]>([
         {
           name: "Year",
@@ -49,9 +58,27 @@
         },
       ]);
 
+      const sortedColumn = ref<SortedColumn>({
+        index: 0,
+        descending: false,
+      });
+
+      const sortedData = computed<FinanceDataEntry[]>(() => {
+        const column = columns.value.at(sortedColumn.value.index);
+
+        if (!column) {
+          return data.value;
+        }
+
+        const sortingStrategy = BuiltInSortingStrategy;
+        const comparer = new Comparer(column.path, sortedColumn.value.descending);
+
+        return sortingStrategy.sort(data.value, comparer);
+      });
+
       return {
         columns: columns,
-        data: props.data,
+        data: sortedData,
         getValueByPath: getValueByPath,
       };
     },
