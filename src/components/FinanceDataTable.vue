@@ -14,8 +14,11 @@
         v-on:click="onColumnSortClicked(index)"
       >
         <div class="flex flex-row justify-center">
+          <div class="w-[1em]"/>
           <div>{{ column.name }}</div>
-          <div v-if="sortedColumn.index === index" :class="{ 'rotate-180': sortedColumn.descending }">^</div>
+          <div :class="[{ 'rotate-180': sortedColumn.descending }, 'w-[1em]']">
+            <div v-if="sortedColumn.index === index">^</div>
+          </div>
         </div>
       </th>
     </tr>
