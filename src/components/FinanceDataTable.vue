@@ -13,7 +13,10 @@
         class="cursor-pointer"
         v-on:click="onColumnSortClicked(index)"
       >
-        {{ column.name }}
+        <div class="flex flex-row justify-center">
+          <div>{{ column.name }}</div>
+          <div v-if="sortedColumn.index === index" :class="{ 'rotate-180': sortedColumn.descending }">^</div>
+        </div>
       </th>
     </tr>
     <tr v-for="datam in data" :key="datam.id">
@@ -114,6 +117,7 @@
 
       return {
         columns: columns,
+        sortedColumn: sortedColumn,
         data: sortedData,
         loadOriginalData: loadOriginalData,
         generateData: generateData,
