@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 rounded-lg max-h-[600px] overflow-y-auto">
+  <div class="bg-gray-100 rounded-lg max-h-[600px] overflow-y-auto" v-on:scroll="onScroll">
     <table class="w-full table-auto">
       <thead class="bg-gray-800 text-white sticky top-0">
         <tr>
@@ -20,9 +20,11 @@
         </tr>
       </thead>
       <tbody class="text-center">
-        <tr v-for="datam in data" :key="datam.id" class="even:bg-gray-200">
+        <tr>Padding Top</tr>
+        <tr v-for="datam in data" :key="datam.id" ref="rows" class="even:bg-gray-200">
           <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
         </tr>
+        <tr>Padding Bottom</tr>
       </tbody>
     </table>
   </div>
@@ -53,6 +55,7 @@
       },
     },
     setup(props) {
+      // Data
       const columns = ref<Column[]>([
         {
           name: "ID",
@@ -105,11 +108,52 @@
         }
       };
 
+      // Virtualized Scrolling
+      const rows = ref<HTMLTableRowElement[]>();
+
+      const elementHeight = computed(() => {
+        const firstRow = rows.value?.at(0);
+
+        if (!firstRow) {
+          return 26;
+        }
+
+        return firstRow.clientHeight;
+      });
+
+      const fullHeight = computed(() => {
+        return elementHeight.value * sortedData.value.length;
+      });
+
+      const displayCount = ref(50);
+      const displayHeight = computed(() => {
+        return elementHeight.value * displayCount.value;
+      });
+
+      const paddingTop = ref(0);
+      const paddingBottom = ref(0);
+
+      const scrollPosition = ref(0);
+
+      const onScroll = (e: UIEvent) => {
+        if (e.type != "scroll") {
+          return;
+        }
+
+        const target = e.target as HTMLElement;
+        scrollPosition.value = target.scrollTop;
+      };
+
       return {
         data: sortedData,
         columns: columns,
         sortedColumn: sortedColumn,
         onColumnSortClicked: onColumnSortClicked,
+
+        rows,
+        elementHeight,
+
+        onScroll,
       };
     },
   });
