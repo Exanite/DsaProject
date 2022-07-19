@@ -1,7 +1,15 @@
 <template>
-  <div class="bg-gray-100 rounded-lg max-h-[600px] overflow-y-auto">
+  <p>Index start: {{ indexStart }}</p>
+  <p>Index end: {{ indexEnd }}</p>
+  <p>Padding top: {{ paddingTop }}</p>
+  <p>Padding bottom: {{ paddingBottom }}</p>
+  <div
+    :style="{'max-height': displayHeight + 'px'}"
+    class="bg-gray-100 rounded-lg overflow-y-auto"
+    v-on:scroll="onScroll"
+  >
     <table class="w-full table-auto">
-      <thead class="bg-gray-800 text-white sticky top-0">
+      <thead ref="headerElement" class="bg-gray-800 text-white sticky top-0">
         <tr>
           <th
             v-for="(column, index) in columns"
@@ -20,9 +28,11 @@
         </tr>
       </thead>
       <tbody class="text-center">
-        <tr v-for="datam in data" :key="datam.id" class="even:bg-gray-200">
+        <tr :style="{height: paddingTop + 'px'}"/>
+        <tr v-for="datam in data.slice(indexStart, indexEnd)" :key="datam.id" ref="rows" :class="indexStart % 2 === 0 ? 'even:bg-gray-200' : 'odd:bg-gray-200'">
           <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
         </tr>
+        <tr :style="{height: paddingBottom  + 'px'}"/>
       </tbody>
     </table>
   </div>
@@ -53,6 +63,7 @@
       },
     },
     setup(props) {
+      // Data
       const columns = ref<Column[]>([
         {
           name: "ID",
@@ -105,11 +116,80 @@
         }
       };
 
+      // Virtualized Scrolling
+      const headerElement = ref<HTMLTableSectionElement>();
+      const rowElements = ref<HTMLTableRowElement[]>();
+
+      const rowHeight = computed(() => {
+        const firstRow = rowElements.value?.at(0);
+
+        if (!firstRow) {
+          return 26;
+        }
+
+        return firstRow.clientHeight;
+      });
+
+      const fullRowsHeight = computed(() => {
+        return rowHeight.value * sortedData.value.length;
+      });
+
+      const displayCount = ref(20);
+      const displayHeight = computed(() => {
+        const headerHeight = headerElement.value?.clientHeight ?? 0;
+
+        return headerHeight + rowHeight.value * displayCount.value;
+      });
+
+      const scrollPosition = ref(0);
+
+      const onScroll = (e: UIEvent) => {
+        if (e.type != "scroll") {
+          return;
+        }
+
+        const target = e.target as HTMLElement;
+        scrollPosition.value = target.scrollTop;
+        
+        if (scrollPosition.value > fullRowsHeight.value) {
+          scrollPosition.value = fullRowsHeight.value;
+          target.scrollTop = fullRowsHeight.value;
+        }
+      };
+
+      const indexStart = computed(() => {
+        return Math.floor(scrollPosition.value / rowHeight.value);
+      });
+
+      const indexEnd = computed(() => {
+        return indexStart.value + displayCount.value + 1;
+      });
+
+      const paddingTop = computed(() => {
+        return indexStart.value * rowHeight.value;
+      });
+
+      const paddingBottom = computed(() => {
+        return Math.max(fullRowsHeight.value - (rowHeight.value * displayCount.value - 1) - paddingTop.value, 0);
+      });
+
       return {
         data: sortedData,
         columns: columns,
         sortedColumn: sortedColumn,
         onColumnSortClicked: onColumnSortClicked,
+
+        headerElement: headerElement,
+        rowElements: rowElements,
+
+        displayHeight: displayHeight,
+        indexEnd: indexEnd,
+        indexStart: indexStart,
+
+        paddingTop: paddingTop,
+        paddingBottom: paddingBottom,
+
+        onScroll: onScroll,
       };
     },
   });
