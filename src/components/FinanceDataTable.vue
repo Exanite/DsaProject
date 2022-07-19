@@ -68,7 +68,7 @@
       },
     },
     emits: {
-      sorted: (columnName: string, elementCount: number, time: number) => true,
+      sorted: (sortingStrategyName: string, columnName: string, elementCount: number, time: number) => true,
     },
     setup(props, context) {
       // Data
@@ -114,8 +114,8 @@
         const result = sortingStrategy.sort(props.data, comparer);
         const endTime = performance.now();
 
-        console.log(`Sorted ${result.length} elements by ${column.name} in ${endTime - startTime} milliseconds`);
-        context.emit("sorted", column.name, result.length, endTime - startTime);
+        console.log(`Sorted ${result.length} elements by ${column.name} in ${endTime - startTime} milliseconds using ${sortingStrategy.name}`);
+        context.emit("sorted", sortingStrategy.name, column.name, result.length, endTime - startTime);
         
         return result;
       });
