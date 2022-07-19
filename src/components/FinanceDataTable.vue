@@ -29,7 +29,12 @@
       </thead>
       <tbody class="text-center">
         <tr :style="{height: paddingTop + 'px'}"/>
-        <tr v-for="datam in data.slice(indexStart, indexEnd)" :key="datam.id" ref="rows" :class="indexStart % 2 === 0 ? 'even:bg-gray-200' : 'odd:bg-gray-200'">
+        <tr
+          v-for="datam in data.slice(indexStart, indexEnd)"
+          :key="datam.id"
+          ref="rows"
+          :class="indexStart % 2 === 0 ? 'even:bg-gray-200' : 'odd:bg-gray-200'"
+        >
           <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
         </tr>
         <tr :style="{height: paddingBottom  + 'px'}"/>
@@ -62,7 +67,10 @@
         required: true,
       },
     },
-    setup(props) {
+    emits: {
+      sorted: (columnName: string, elementCount: number, time: number) => true,
+    },
+    setup(props, context) {
       // Data
       const columns = ref<Column[]>([
         {
@@ -102,7 +110,14 @@
         const sortingStrategy = BuiltInSortingStrategy;
         const comparer = new Comparer(column.getValue, sortedColumn.value.descending);
 
-        return sortingStrategy.sort(props.data, comparer);
+        const startTime = performance.now();
+        const result = sortingStrategy.sort(props.data, comparer);
+        const endTime = performance.now();
+
+        console.log(`Sorted ${result.length} elements by ${column.name} in ${endTime - startTime} milliseconds`);
+        context.emit("sorted", column.name, result.length, endTime - startTime);
+        
+        return result;
       });
 
       const onColumnSortClicked = (index: number) => {
@@ -150,7 +165,7 @@
 
         const target = e.target as HTMLElement;
         scrollPosition.value = target.scrollTop;
-        
+
         if (scrollPosition.value > fullRowsHeight.value) {
           scrollPosition.value = fullRowsHeight.value;
           target.scrollTop = fullRowsHeight.value;
