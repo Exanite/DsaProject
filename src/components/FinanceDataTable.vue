@@ -26,7 +26,7 @@
         </tr>
       </thead>
       <tbody class="text-center">
-        <tr v-for="datam in data" :key="datam.id">
+        <tr v-for="datam in data" :key="datam.id" class="even:bg-gray-200">
           <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
         </tr>
       </tbody>
