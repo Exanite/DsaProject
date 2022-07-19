@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <button v-on:click="loadOriginalData()">Load original data</button>
-    <button v-on:click="generateData(10)">Generate 10 entries</button>
-    <button v-on:click="generateData(100)">Generate 100 entries</button>
-    <button v-on:click="generateData(1000)">Generate 1000 entries</button>
+  <div class="pb-4 flex flex-row space-x-2">
+    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="loadOriginalData()">Load original data</button>
+    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(10)">Generate 10 entries</button>
+    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(100)">Generate 100 entries</button>
+    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(1000)">Generate 1000 entries</button>
   </div>
-  <div class="h-[100px] overflow-y-scroll">
-    <table class="w-1/2">
-      <tr class="bg-white sticky top-0">
+  <div class="h-[600px] bg-gray-100 rounded-lg">
+    <table class="w-full table-auto overflow-scroll">
+      <tr class="bg-gray-800 text-white sticky top-0">
         <th
           v-for="(column, index) in columns"
           :key="column.name"
@@ -23,7 +23,11 @@
           </div>
         </th>
       </tr>
-      <tr v-for="datam in data" :key="datam.id">
+      <tr 
+        v-for="datam in data" 
+        :key="datam.id"
+        class="text-center"
+      >
         <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
       </tr>
     </table>
