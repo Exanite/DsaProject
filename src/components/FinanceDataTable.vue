@@ -1,10 +1,4 @@
 <template>
-  <div class="pb-4 flex flex-row space-x-2">
-    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="loadOriginalData()">Load original data</button>
-    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(10)">Generate 10 entries</button>
-    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(100)">Generate 100 entries</button>
-    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(1000)">Generate 1000 entries</button>
-  </div>
   <div class="bg-gray-100 rounded-lg max-h-[600px] overflow-y-auto">
     <table class="w-full table-auto">
       <thead class="bg-gray-800 text-white sticky top-0">
@@ -37,8 +31,7 @@
 <script lang="ts">
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
   import { Comparer } from "@/data/comparers/Comparer";
-  import { DataGenerator } from "@/data/DataGenerator";
-  import { FinanceDataEntry, getFinanceData } from "@/data/FinanceData";
+  import { FinanceDataEntry } from "@/data/FinanceData";
   import { computed, defineComponent, ref } from "vue";
 
   interface Column {
@@ -60,8 +53,6 @@
       },
     },
     setup(props) {
-      const data = ref(props.data);
-
       const columns = ref<Column[]>([
         {
           name: "ID",
@@ -94,13 +85,13 @@
         const column = columns.value.at(sortedColumn.value.index);
 
         if (!column) {
-          return data.value;
+          return props.data;
         }
 
         const sortingStrategy = BuiltInSortingStrategy;
         const comparer = new Comparer(column.getValue, sortedColumn.value.descending);
 
-        return sortingStrategy.sort(data.value, comparer);
+        return sortingStrategy.sort(props.data, comparer);
       });
 
       const onColumnSortClicked = (index: number) => {
@@ -113,23 +104,11 @@
           };
         }
       };
-      
-      const loadOriginalData = () => {
-        data.value = getFinanceData();
-      }
-
-      const generateData = (count: number) => {
-        const generator = new DataGenerator();
-
-        data.value = generator.generateCollection(count);
-      };
 
       return {
+        data: sortedData,
         columns: columns,
         sortedColumn: sortedColumn,
-        data: sortedData,
-        loadOriginalData: loadOriginalData,
-        generateData: generateData,
         onColumnSortClicked: onColumnSortClicked,
       };
     },
