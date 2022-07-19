@@ -150,6 +150,11 @@
 
         const target = e.target as HTMLElement;
         scrollPosition.value = target.scrollTop;
+        
+        if (scrollPosition.value > fullRowsHeight.value) {
+          scrollPosition.value = fullRowsHeight.value;
+          target.scrollTop = fullRowsHeight.value;
+        }
       };
 
       const indexStart = computed(() => {
