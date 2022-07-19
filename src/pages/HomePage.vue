@@ -1,12 +1,5 @@
 <template>
-  <div class="home">
-    <nav>
-      <router-link to="/">Home</router-link>
-      |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <FinanceDataTable :data="financeData"/>
-  </div>
+  <FinanceDataTable :data="financeData"/>
 </template>
 
 <script lang="ts">
@@ -23,10 +16,10 @@
     },
     setup() {
       const financeData = ref(getFinanceData());
-      
+
       return {
         financeData: financeData,
-      }
-    }
+      };
+    },
   });
 </script>
