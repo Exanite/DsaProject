@@ -28,11 +28,11 @@
         </tr>
       </thead>
       <tbody class="text-center">
-        <tr :style="{height: paddingTop + 'px'}" class="bg-red-500"/>
+        <tr :style="{height: paddingTop + 'px'}"/>
         <tr v-for="datam in data.slice(indexStart, indexEnd)" :key="datam.id" ref="rows" :class="indexStart % 2 === 0 ? 'even:bg-gray-200' : 'odd:bg-gray-200'">
           <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
         </tr>
-        <tr :style="{height: paddingBottom  + 'px'}" class="bg-red-500"/>
+        <tr :style="{height: paddingBottom  + 'px'}"/>
       </tbody>
     </table>
   </div>
