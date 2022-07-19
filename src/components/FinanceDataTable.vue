@@ -1,13 +1,15 @@
 <template>
-  {{ indexStart }}
-  {{ indexEnd }}
+  <p>Index start: {{ indexStart }}</p>
+  <p>Index end: {{ indexEnd }}</p>
+  <p>Padding top: {{ paddingTop }}</p>
+  <p>Padding bottom: {{ paddingBottom }}</p>
   <div
     :style="{'max-height': displayHeight + 'px'}"
     class="bg-gray-100 rounded-lg overflow-y-auto"
     v-on:scroll="onScroll"
   >
     <table class="w-full table-auto">
-      <thead class="bg-gray-800 text-white sticky top-0" ref="headerElement">
+      <thead ref="headerElement" class="bg-gray-800 text-white sticky top-0">
         <tr>
           <th
             v-for="(column, index) in columns"
@@ -26,9 +28,11 @@
         </tr>
       </thead>
       <tbody class="text-center">
-        <tr v-for="datam in data" :key="datam.id" ref="rows" class="even:bg-gray-200">
+        <tr :style="{height: paddingTop + 'px'}" class="bg-red-500"/>
+        <tr v-for="datam in data.slice(indexStart, indexEnd)" :key="datam.id" ref="rows" class="even:bg-gray-200">
           <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
         </tr>
+        <tr :style="{height: paddingBottom  + 'px'}" class="bg-red-500"/>
       </tbody>
     </table>
   </div>
@@ -116,7 +120,7 @@
       const headerElement = ref<HTMLTableSectionElement>();
       const rowElements = ref<HTMLTableRowElement[]>();
 
-      const elementHeight = computed(() => {
+      const rowHeight = computed(() => {
         const firstRow = rowElements.value?.at(0);
 
         if (!firstRow) {
@@ -126,19 +130,16 @@
         return firstRow.clientHeight;
       });
 
-      const fullHeight = computed(() => {
-        return elementHeight.value * sortedData.value.length;
+      const fullRowsHeight = computed(() => {
+        return rowHeight.value * sortedData.value.length;
       });
 
       const displayCount = ref(20);
       const displayHeight = computed(() => {
         const headerHeight = headerElement.value?.clientHeight ?? 0;
-        
-        return headerHeight + elementHeight.value * displayCount.value;
-      });
 
-      const paddingTop = ref(0);
-      const paddingBottom = ref(0);
+        return headerHeight + rowHeight.value * displayCount.value;
+      });
 
       const scrollPosition = ref(0);
 
@@ -152,11 +153,19 @@
       };
 
       const indexStart = computed(() => {
-        return Math.floor(scrollPosition.value / elementHeight.value);
+        return Math.floor(scrollPosition.value / rowHeight.value);
       });
 
       const indexEnd = computed(() => {
         return indexStart.value + displayCount.value;
+      });
+
+      const paddingTop = computed(() => {
+        return indexStart.value * rowHeight.value;
+      });
+
+      const paddingBottom = computed(() => {
+        return fullRowsHeight.value - rowHeight.value * displayCount.value - paddingTop.value;
       });
 
       return {
@@ -171,6 +180,9 @@
         displayHeight: displayHeight,
         indexEnd: indexEnd,
         indexStart: indexStart,
+
+        paddingTop: paddingTop,
+        paddingBottom: paddingBottom,
 
         onScroll: onScroll,
       };
