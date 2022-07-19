@@ -5,8 +5,8 @@
     <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(100)">Generate 100 entries</button>
     <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(1000)">Generate 1000 entries</button>
   </div>
-  <div class="h-[600px] bg-gray-100 rounded-lg">
-    <table class="w-full table-auto overflow-scroll">
+  <div class="max-h-[600px] overflow-auto bg-gray-100 rounded-lg">
+    <table class="w-full table-auto">
       <tr class="bg-gray-800 text-white sticky top-0">
         <th
           v-for="(column, index) in columns"
