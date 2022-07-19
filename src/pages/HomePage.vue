@@ -3,7 +3,7 @@
     <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="loadOriginalData()">Load original data</button>
     <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(10)">Generate 10 entries</button>
     <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(100)">Generate 100 entries</button>
-    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(1000)">Generate 1000 entries</button>
+    <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(100000)">Generate 100,000 entries</button>
   </div>
   <FinanceDataTable :data="data"/>
 </template>
