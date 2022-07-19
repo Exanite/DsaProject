@@ -5,31 +5,31 @@
     <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(100)">Generate 100 entries</button>
     <button class="bg-gray-800 rounded-md text-white font-bold p-1" v-on:click="generateData(1000)">Generate 1000 entries</button>
   </div>
-  <div class="max-h-[600px] overflow-auto bg-gray-100 rounded-lg">
+  <div class="bg-gray-100 rounded-lg max-h-[600px] overflow-y-auto">
     <table class="w-full table-auto">
-      <tr class="bg-gray-800 text-white sticky top-0">
-        <th
-          v-for="(column, index) in columns"
-          :key="column.name"
-          class="cursor-pointer"
-          v-on:click="onColumnSortClicked(index)"
-        >
-          <div class="flex flex-row justify-center">
-            <div class="w-[1em]"/>
-            <div>{{ column.name }}</div>
-            <div :class="[{ 'rotate-180': sortedColumn.descending }, 'w-[1em]']">
-              <div v-if="sortedColumn.index === index">^</div>
+      <thead class="bg-gray-800 text-white sticky top-0">
+        <tr>
+          <th
+            v-for="(column, index) in columns"
+            :key="column.name"
+            class="cursor-pointer"
+            v-on:click="onColumnSortClicked(index)"
+          >
+            <div class="flex flex-row justify-center">
+              <div class="w-[1em]"/>
+              <div>{{ column.name }}</div>
+              <div :class="[{ 'rotate-180': sortedColumn.descending }, 'w-[1em]']">
+                <div v-if="sortedColumn.index === index">^</div>
+              </div>
             </div>
-          </div>
-        </th>
-      </tr>
-      <tr 
-        v-for="datam in data" 
-        :key="datam.id"
-        class="text-center"
-      >
-        <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
-      </tr>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr v-for="datam in data" :key="datam.id">
+          <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
