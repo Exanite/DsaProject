@@ -29,7 +29,7 @@
       </thead>
       <tbody class="text-center">
         <tr :style="{height: paddingTop + 'px'}" class="bg-red-500"/>
-        <tr v-for="datam in data.slice(indexStart, indexEnd)" :key="datam.id" ref="rows" class="even:bg-gray-200">
+        <tr v-for="datam in data.slice(indexStart, indexEnd)" :key="datam.id" ref="rows" :class="indexStart % 2 === 0 ? 'even:bg-gray-200' : 'odd:bg-gray-200'">
           <td v-for="column in columns" :key="column.name">{{ column.getValue(datam) }}</td>
         </tr>
         <tr :style="{height: paddingBottom  + 'px'}" class="bg-red-500"/>
@@ -157,7 +157,7 @@
       });
 
       const indexEnd = computed(() => {
-        return indexStart.value + displayCount.value;
+        return indexStart.value + displayCount.value + 1;
       });
 
       const paddingTop = computed(() => {
@@ -165,7 +165,7 @@
       });
 
       const paddingBottom = computed(() => {
-        return fullRowsHeight.value - rowHeight.value * displayCount.value - paddingTop.value;
+        return Math.max(fullRowsHeight.value - (rowHeight.value * displayCount.value - 1) - paddingTop.value, 0);
       });
 
       return {
