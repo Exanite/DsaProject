@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-  import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
+  import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { Comparer } from "@/data/comparers/Comparer";
   import { FinanceDataEntry } from "@/data/FinanceData";
   import { computed, defineComponent, ref } from "vue";
@@ -64,11 +64,12 @@
     props: {
       data: {
         type: Array as () => FinanceDataEntry[],
-        required: true
+        required: true,
       },
       sortMethod: {
-        required: true
-      }
+        type: Object as () => SortingStrategy,
+        required: true,
+      },
     },
     emits: {
       sorted: (sortingStrategyName: string, columnName: string, elementCount: number, time: number) => true,
@@ -110,29 +111,7 @@
           return props.data;
         }
 
-        let sortingStrategy;
-        switch(props.sortMethod) {
-          case "merge":
-            sortingStrategy = BuiltInSortingStrategy;
-            console.log("changed to merge");
-            break;
-          case "quick":
-            sortingStrategy = BuiltInSortingStrategy;
-            console.log("changed to quick");
-            break;
-          case "insertion":
-            sortingStrategy = BuiltInSortingStrategy;
-            console.log("changed to insertion");
-            break;
-          case "bubble":
-            sortingStrategy = BuiltInSortingStrategy;
-            console.log("changed to bubble");
-            break;
-          default:
-            sortingStrategy = BuiltInSortingStrategy;
-            console.log("default sorting");
-        } 
-
+        const sortingStrategy = props.sortMethod;
         const comparer = new Comparer(column.getValue, sortedColumn.value.descending);
 
         const startTime = performance.now();
@@ -141,7 +120,7 @@
 
         console.log(`Sorted ${result.length} elements by ${column.name} in ${endTime - startTime} milliseconds using ${sortingStrategy.name}`);
         context.emit("sorted", sortingStrategy.name, column.name, result.length, endTime - startTime);
-        
+
         return result;
       });
 
