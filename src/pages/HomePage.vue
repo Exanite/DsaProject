@@ -33,13 +33,13 @@
     name: "HomePage",
     components: {
       FinanceDataTable,
-          },
+    },
     setup() {
       const data = ref(getFinanceData());
 
       const loadOriginalData = () => {
         data.value = getFinanceData();
-      }
+      };
 
       const generateData = (count: number) => {
         const generator = new DataGenerator();
@@ -51,17 +51,15 @@
         console.log("Sort method changed to " + method);
       };
 
+      const sortMethod = ref("");
+
       return {
         data: data,
         loadOriginalData,
         generateData,
-        sortData
+        sortData,
+        sortMethod,
       };
     },
-    data() {
-    return {
-      sortMethod: "",
-    }
-  }
   });
 </script>
