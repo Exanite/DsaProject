@@ -12,7 +12,8 @@
           <label for="sortMethod" class="block text-sm font-medium text-gray-700 sm:py-2"> Sort Method </label>
           <div class="mt-1 mb-4 sm:mt-0 sm:col-span-2">
             <select v-model="sortMethod" @change="sortData(sortMethod)" id="sortMethod" name="sortMethod" class="max-w-lg p-2 block bg-gray-50 border border-gray-200 w-full shadow-sm sm:max-w-xs sm:text-sm rounded-md">
-              <option default value="">Select a Sort Method</option>
+              <option selected disabled hidden value="">Select a Sort Method</option>
+              <option value="js">JS Built-in Sort</option>
               <option value="merge">Merge Sort</option>
               <option value="quick">Quick Sort</option>
               <option value="insertion">Insertion Sort</option>
