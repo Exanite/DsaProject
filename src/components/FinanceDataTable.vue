@@ -64,8 +64,11 @@
     props: {
       data: {
         type: Array as () => FinanceDataEntry[],
-        required: true,
+        required: true
       },
+      sortMethod: {
+        required: true
+      }
     },
     emits: {
       sorted: (sortingStrategyName: string, columnName: string, elementCount: number, time: number) => true,
@@ -107,7 +110,29 @@
           return props.data;
         }
 
-        const sortingStrategy = BuiltInSortingStrategy;
+        let sortingStrategy;
+        switch(props.sortMethod) {
+          case "merge":
+            sortingStrategy = BuiltInSortingStrategy;
+            console.log("changed to merge");
+            break;
+          case "quick":
+            sortingStrategy = BuiltInSortingStrategy;
+            console.log("changed to quick");
+            break;
+          case "insertion":
+            sortingStrategy = BuiltInSortingStrategy;
+            console.log("changed to insertion");
+            break;
+          case "bubble":
+            sortingStrategy = BuiltInSortingStrategy;
+            console.log("changed to bubble");
+            break;
+          default:
+            sortingStrategy = BuiltInSortingStrategy;
+            console.log("default sorting");
+        } 
+
         const comparer = new Comparer(column.getValue, sortedColumn.value.descending);
 
         const startTime = performance.now();

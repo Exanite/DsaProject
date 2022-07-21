@@ -19,7 +19,7 @@
               <option value="bubble">Bubble Sort</option>
             </select>
           </div>
-    <FinanceDataTable :data="data"/>
+    <FinanceDataTable :data="data" :sortMethod="sortMethod"/>
   </div>
 </template>
 
