@@ -39,6 +39,7 @@
   import { BubbleSortStrategy } from "@/data/algorithms/BubbleSortStrategy";
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
   import { QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
+  import { SelectionSortStrategy } from "@/data/algorithms/SelectionSortStrategy";
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
@@ -66,6 +67,7 @@
         // Swap these out to add new sorts
         BuiltInSortingStrategy,
         BubbleSortStrategy,
+        SelectionSortStrategy,
         QuickSortFirstStrategy,
         QuickSortMedianOf3Strategy,
       ]);
