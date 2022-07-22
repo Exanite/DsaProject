@@ -38,6 +38,7 @@
   import FinanceDataTable from "@/components/FinanceDataTable.vue";
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
   import { BubbleSortStrategy } from "@/data/algorithms/BubbleSortStrategy";
+  import { SelectionSortStrategy } from "@/data/algorithms/SelectionSortStrategy";
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
@@ -64,7 +65,7 @@
       const sortingStrategies = ref<SortingStrategy[]>([
         BuiltInSortingStrategy,
         BubbleSortStrategy, // Swap these out to add new sorts
-        BuiltInSortingStrategy,
+        SelectionSortStrategy,
       ]);
 
       const selectedStrategyOption = ref<SortingStrategy | undefined>(undefined);
