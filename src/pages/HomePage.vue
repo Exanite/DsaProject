@@ -13,8 +13,8 @@
       <button class="bg-gray-800 rounded-md text-white font-bold py-1 px-2" v-on:click="generateData(100)">
         Generate 100 entries
       </button>
-      <button class="bg-gray-800 rounded-md text-white font-bold py-1 px-2" v-on:click="generateData(100000)">
-        Generate 100,000 entries
+      <button class="bg-gray-800 rounded-md text-white font-bold py-1 px-2" v-on:click="generateData(1000)">
+        Generate 1,000 entries
       </button>
     </div>
     <label class="block text-sm font-medium text-gray-700 sm:py-2" for="sortMethod"> Sort Method </label>
@@ -36,9 +36,9 @@
 
 <script lang="ts">
   import FinanceDataTable from "@/components/FinanceDataTable.vue";
-  import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
   import { BubbleSortStrategy } from "@/data/algorithms/BubbleSortStrategy";
-  import { QuickSortStrategy } from "@/data/algorithms/QuickSortStrategy";
+  import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
+  import { QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
@@ -66,7 +66,8 @@
         // Swap these out to add new sorts
         BuiltInSortingStrategy,
         BubbleSortStrategy,
-        QuickSortStrategy,
+        QuickSortFirstStrategy,
+        QuickSortMedianOf3Strategy,
       ]);
 
       const selectedStrategyOption = ref<SortingStrategy | undefined>(undefined);

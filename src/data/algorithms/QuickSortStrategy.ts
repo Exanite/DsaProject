@@ -1,8 +1,40 @@
 import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
 import { Comparer } from "@/data/comparers/Comparer";
 
-const partition = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer): number => {
-  const pivot = collection[startIndex];
+type PivotSelector = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer) => T;
+
+const getFirstPivot: PivotSelector = (collection, startIndex) => {
+  return collection[startIndex];
+};
+
+const getMedianOf3Pivot: PivotSelector = (collection, startIndex, endIndex, comparer) => {
+  const a = collection[startIndex];
+  const b = collection[Math.floor((startIndex + endIndex - 1) / 2)];
+  const c = collection[endIndex - 1];
+
+  comparer.compare(b, a) < 0;
+
+  if (comparer.compare(a, b) > 0) {
+    if (comparer.compare(a, c) < 0) {
+      return a;
+    } else if (comparer.compare(b, c) > 0) {
+      return b;
+    } else {
+      return c;
+    }
+  } else {
+    if (comparer.compare(a, c) > 0) {
+      return a;
+    } else if (comparer.compare(b, c) < 0) {
+      return b;
+    } else {
+      return c;
+    }
+  }
+};
+
+const partition = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotSelector): number => {
+  const pivot = pivotSelector(collection, startIndex, endIndex, comparer);
 
   let leftIndex = startIndex;
   let rightIndex = endIndex - 1;
@@ -14,20 +46,20 @@ const partition = <T>(collection: T[], startIndex: number, endIndex: number, com
       if (comparer.compare(collection[leftIndex], pivot) > 0) {
         break;
       }
-      
+
       leftIndex++;
     }
-    
+
     // Narrow from right to left
-    for (let i = endIndex - 1; i > startIndex ; i--) {
+    for (let i = endIndex - 1; i > startIndex; i--) {
       // Stop at first right value that is out of place
       if (comparer.compare(collection[rightIndex], pivot) < 0) {
         break;
       }
-      
+
       rightIndex--;
     }
-    
+
     if (leftIndex < rightIndex) {
       // Swap the two out of place values
       const temp = collection[leftIndex];
@@ -44,21 +76,29 @@ const partition = <T>(collection: T[], startIndex: number, endIndex: number, com
   return rightIndex;
 };
 
-const quickSort = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer): T[] => {
+const quickSort = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotSelector): T[] => {
   if (startIndex < endIndex) {
-    const pivotIndex = partition(collection, startIndex, endIndex, comparer);
+    const pivotIndex = partition(collection, startIndex, endIndex, comparer, pivotSelector);
 
-    quickSort(collection, startIndex, pivotIndex, comparer);
-    quickSort(collection, pivotIndex + 1, endIndex, comparer);
+    quickSort(collection, startIndex, pivotIndex, comparer, pivotSelector);
+    quickSort(collection, pivotIndex + 1, endIndex, comparer, pivotSelector);
   }
 
   return collection;
 };
 
-export const QuickSortStrategy: SortingStrategy = {
-  name: "Quick Sort",
+export const QuickSortFirstStrategy: SortingStrategy = {
+  name: "Quick Sort with First Element as Pivot",
 
   sort<T>(collection: T[], comparer: Comparer): T[] {
-    return quickSort(collection, 0, collection.length, comparer);
+    return quickSort(collection, 0, collection.length, comparer, getMedianOf3Pivot);
+  },
+};
+
+export const QuickSortMedianOf3Strategy: SortingStrategy = {
+  name: "Quick Sort with Median of 3 Pivot",
+
+  sort<T>(collection: T[], comparer: Comparer): T[] {
+    return quickSort(collection, 0, collection.length, comparer, getFirstPivot);
   },
 };
