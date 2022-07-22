@@ -66,7 +66,7 @@
         type: Array as () => FinanceDataEntry[],
         required: true,
       },
-      sortMethod: {
+      sortingStrategy: {
         type: Object as () => SortingStrategy,
         required: true,
       },
@@ -111,7 +111,7 @@
           return props.data;
         }
 
-        const sortingStrategy = props.sortMethod;
+        const sortingStrategy = props.sortingStrategy;
         const comparer = new Comparer(column.getValue, sortedColumn.value.descending);
 
         const startTime = performance.now();

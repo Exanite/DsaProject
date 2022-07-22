@@ -21,16 +21,16 @@
     <div class="mt-1 mb-4 sm:mt-0 sm:col-span-2">
       <select
         id="sortMethod"
-        v-model="sortMethod"
+        v-model="selectedStrategyOption"
         class="max-w-lg p-2 block bg-gray-50 border border-gray-200 w-full shadow-sm sm:max-w-xs sm:text-sm rounded-md"
         name="sortMethod"
-        @change="sortData(sortMethod)"
       >
-        <option :value="sortingStrategies[0]" disabled hidden selected>Select a Sort Method</option>
+        <option :value="undefined" disabled hidden selected>Select a Sort Method</option>
         <option v-for="strategy in sortingStrategies" :value="strategy">{{ strategy.name }}</option>
       </select>
     </div>
-    <FinanceDataTable :data="data" :sortMethod="sortMethod"/>
+    <p>Selected method: {{ selectedStrategy.name }}</p>
+    <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy"/>
   </div>
 </template>
 
@@ -41,7 +41,7 @@
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
-  import { defineComponent, ref } from "vue";
+  import { computed, defineComponent, ref } from "vue";
 
   export default defineComponent({
     name: "HomePage",
@@ -61,25 +61,24 @@
         data.value = generator.generateCollection(count);
       };
 
-      const sortData = (method: SortingStrategy) => {
-        console.log("Sort method changed to " + method.name);
-      };
-
       const sortingStrategies = ref<SortingStrategy[]>([
         BuiltInSortingStrategy,
         BubbleSortStrategy, // Swap these out to add new sorts
         BuiltInSortingStrategy,
       ]);
 
-      const sortMethod = ref<SortingStrategy>(BuiltInSortingStrategy);
+      const selectedStrategyOption = ref<SortingStrategy | undefined>(undefined);
+      const selectedStrategy = computed<SortingStrategy>(() => {
+        return selectedStrategyOption.value ?? BuiltInSortingStrategy;
+      });
 
       return {
         data: data,
         loadOriginalData,
         generateData,
-        sortData,
         sortingStrategies,
-        sortMethod,
+        selectedStrategyOption: selectedStrategyOption,
+        selectedStrategy: selectedStrategy,
       };
     },
   });
