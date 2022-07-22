@@ -5,7 +5,7 @@ const partition = <T>(collection: T[], startIndex: number, endIndex: number, com
   const pivot = collection[startIndex];
 
   let leftIndex = startIndex;
-  let rightIndex = endIndex;
+  let rightIndex = endIndex - 1;
 
   while (leftIndex < rightIndex) {
     // Narrow from left to right
@@ -19,7 +19,7 @@ const partition = <T>(collection: T[], startIndex: number, endIndex: number, com
     }
     
     // Narrow from right to left
-    for (let i = endIndex; i > startIndex ; i--) {
+    for (let i = endIndex - 1; i > startIndex ; i--) {
       // Stop at first right value that is out of place
       if (comparer.compare(collection[rightIndex], pivot) < 0) {
         break;
@@ -48,7 +48,7 @@ const quickSort = <T>(collection: T[], startIndex: number, endIndex: number, com
   if (startIndex < endIndex) {
     const pivotIndex = partition(collection, startIndex, endIndex, comparer);
 
-    quickSort(collection, startIndex, pivotIndex - 1, comparer);
+    quickSort(collection, startIndex, pivotIndex, comparer);
     quickSort(collection, pivotIndex + 1, endIndex, comparer);
   }
 
