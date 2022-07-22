@@ -91,7 +91,7 @@ export const QuickSortFirstStrategy: SortingStrategy = {
   name: "Quick Sort with First Element as Pivot",
 
   sort<T>(collection: T[], comparer: Comparer): T[] {
-    return quickSort(collection, 0, collection.length, comparer, getMedianOf3Pivot);
+    return quickSort(collection, 0, collection.length, comparer, getFirstPivot);
   },
 };
 
@@ -99,6 +99,6 @@ export const QuickSortMedianOf3Strategy: SortingStrategy = {
   name: "Quick Sort with Median of 3 Pivot",
 
   sort<T>(collection: T[], comparer: Comparer): T[] {
-    return quickSort(collection, 0, collection.length, comparer, getFirstPivot);
+    return quickSort(collection, 0, collection.length, comparer, getMedianOf3Pivot);
   },
 };
