@@ -14,6 +14,7 @@ export const BubbleSortStrategy: SortingStrategy = {
           collection[j] = collection[j + 1];
           collection[j + 1] = temp;
           sorted = false;
+          console.log("test"); //Not outputting, Tried Using comparer.descending instead, but still wasn't really working
         }
       }
       if (sorted) {
