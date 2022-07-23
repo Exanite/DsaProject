@@ -36,7 +36,9 @@
       </select>
     </div>
     <p>Selected method: {{ selectedStrategy.name }}</p>
-    <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy"/>
+    <p>Sorted By Column: {{ columnName }}</p>
+    <p>Duration: {{ (Math.round(sortDuration * 1000) / 1000).toFixed(3) }} Milliseconds</p>
+    <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="handleSorted"/>
   </div>
 </template>
 
@@ -57,7 +59,14 @@
       FinanceDataTable,
     },
     setup() {
-      const data = ref(getFinanceData());
+      const data = ref(getFinanceData());      
+      const sortDuration = ref(0);
+      const columnName = ref("ID");
+
+      const handleSorted = (sortingStrategyName: string, colName: string, resultLength: number, duration: number) => {
+        sortDuration.value = duration;
+        columnName.value = colName;
+      };
 
       const loadOriginalData = () => {
         data.value = getFinanceData();
@@ -85,12 +94,15 @@
       });
 
       return {
-        data: data,
+        data,
+        handleSorted,
         loadOriginalData,
         generateData,
+        sortDuration,
+        columnName,
         sortingStrategies,
-        selectedStrategyOption: selectedStrategyOption,
-        selectedStrategy: selectedStrategy,
+        selectedStrategyOption,
+        selectedStrategy,
       };
     },
   });
