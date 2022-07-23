@@ -169,9 +169,10 @@
 
 <script lang="ts">
   import FinanceDataTable from "@/components/FinanceDataTable.vue";
+  import { ArrayQuickSortStrategy } from "@/data/algorithms/ArrayQuickSortStrategy";
   import { BubbleSortStrategy } from "@/data/algorithms/BubbleSortStrategy";
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
-  import { ArrayQuickSortStrategy, QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
+  import { QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
   import { SelectionSortStrategy } from "@/data/algorithms/SelectionSortStrategy";
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
