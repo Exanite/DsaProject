@@ -44,7 +44,7 @@
   import FinanceDataTable from "@/components/FinanceDataTable.vue";
   import { BubbleSortStrategy } from "@/data/algorithms/BubbleSortStrategy";
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
-  import { QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
+  import { ArrayQuickSortStrategy, QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
   import { SelectionSortStrategy } from "@/data/algorithms/SelectionSortStrategy";
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
@@ -76,6 +76,7 @@
         SelectionSortStrategy,
         QuickSortFirstStrategy,
         QuickSortMedianOf3Strategy,
+        ArrayQuickSortStrategy,
       ]);
 
       const selectedStrategyOption = ref<SortingStrategy | undefined>(undefined);

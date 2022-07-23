@@ -102,3 +102,36 @@ export const QuickSortMedianOf3Strategy: SortingStrategy = {
     return quickSort(collection, 0, collection.length, comparer, getMedianOf3Pivot);
   },
 };
+
+const arrayQuickSort = <T>(collection: T[], comparer: Comparer): T[] => {
+  if (collection.length <= 1) {
+    return collection;
+  }
+
+  const pivotIndex = Math.floor(collection.length / 2);
+  const pivot = collection[pivotIndex];
+  const left: T[] = [];
+  const right: T[] = [];
+
+  for (let i = 0; i < collection.length; i++) {
+    if (i == pivotIndex) {
+      continue;
+    }
+
+    if (comparer.compare(collection[i], pivot) < 0) {
+      left.push(collection[i]);
+    } else {
+      right.push(collection[i]);
+    }
+  }
+
+  return [...arrayQuickSort(left, comparer), pivot, ...arrayQuickSort(right, comparer)];
+};
+
+export const ArrayQuickSortStrategy: SortingStrategy = {
+  name: "Array Quick Sort",
+
+  sort<T>(collection: T[], comparer: Comparer): T[] {
+    return arrayQuickSort(collection, comparer);
+  },
+};
