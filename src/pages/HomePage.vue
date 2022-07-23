@@ -16,6 +16,9 @@
       <button class="bg-gray-800 rounded-md text-white font-bold py-1 px-2" v-on:click="generateData(1000)">
         Generate 1,000 entries
       </button>
+      <button class="bg-gray-800 rounded-md text-white font-bold py-1 px-2" v-on:click="generateData(10000)">
+        Generate 10,000 entries
+      </button>
       <button class="bg-gray-800 rounded-md text-white font-bold py-1 px-2" v-on:click="generateData(100000)">
         Generate 100,000 entries
       </button>
