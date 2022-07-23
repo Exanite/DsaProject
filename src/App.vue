@@ -1,15 +1,12 @@
 <template>
   <div>
-    <main class="flex-1">
+    <main>
       <router-view></router-view>
     </main>
   </div>
 </template>
 
 <script lang="ts">
-  import { defineComponent, ref } from "vue";
-
-  export default defineComponent({
-    name: "App",
-      });
+  import { defineComponent } from "vue";
+  export default defineComponent({ ame: "App" });
 </script>
