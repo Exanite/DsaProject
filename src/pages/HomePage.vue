@@ -196,7 +196,7 @@
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
           <p>When a new sorting method is selected, it will automatically sort by column ID.</p>
-          <p class="mb-2">To sort by a different column, or to pick between ascending or descending orer, select the column. </p>
+          <p class="mb-2">To sort by a different column, or to pick between ascending or descending order, select the column. </p>
           <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="handleSorted"/>
         </div>
       </div>
