@@ -192,9 +192,11 @@
       <div v-if="loading" class="bg-black bg-opacity-25 absolute h-full w-screen z-50"></div>
       <div class="py-6">       
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 class="text-center text-2xl font-semibold text-gray-900">Data Viewer</h1>
+          <h1 class="text-center text-2xl font-semibold text-gray-900">Super duper, awesome title for this project. Go gators.</h1>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
+          <p>When a new sorting method is selected, it will automatically sort by column ID.</p>
+          <p class="mb-2">To sort by a different column, or to pick between ascending or descending orer, select the column. </p>
           <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="handleSorted"/>
         </div>
       </div>
