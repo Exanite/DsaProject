@@ -1,7 +1,7 @@
 <template>
 <div class="">
   <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-  <div class="relative z-40 hidden md:hidden" role="dialog" aria-modal="true">
+  <div v-if="showMobile" class="relative z-40 md:hidden" role="dialog" aria-modal="true">
     <!--
     Off-canvas menu backdrop, show/hide based on off-canvas menu state.
 
@@ -14,7 +14,7 @@
     -->
     <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
 
-    <div class="fixed inset-0 flex z-40">
+    <div  class="fixed inset-0 flex z-40">
       <!--
       Off-canvas menu, show/hide based on off-canvas menu state.
 
@@ -37,7 +37,7 @@
         To: "opacity-0"
         -->
         <div class="absolute top-0 right-0 -mr-12 pt-2">
-          <button type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+          <button @click="showMobile = false" type="button" class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
             <span class="sr-only">Close sidebar</span>
             <!-- Heroicon name: outline/x -->
             <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -47,45 +47,59 @@
         </div>
 
         <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
-          <div class="flex-shrink-0 flex items-center px-4">
-            <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow">
-          </div>
+          <div class="flex items-center flex-shrink-0 px-4 text-3xl text-white font-bold">
+          Project 3
+        </div>
           <nav class="mt-5 px-2 space-y-1">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a
-              v-for="item in navigation"
-              :key="item.name"
-              :href="item.href"
-              class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-            >
-              <svg
-                aria-hidden="true"
-                class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path :d="item.icon" stroke-linecap="round" stroke-linejoin="round"/>
+            <div class="text-white pr-2 pl-4 pt-8 pb-4 border rounded-md mb-2 text-md font-medium">
+            <p>Selected method: <span class="block font-semibold pb-4">{{ selectedStrategy.name }}</span></p>
+            <p class="mb-4">Sorted By Column: <span class="font-semibold">{{ columnName }}</span></p>
+            <p>Sort Calculation Duration: <span class="block font-semibold pb-4">{{ (Math.round(sortDuration * 1000) / 1000).toFixed(3) }} Milliseconds</span></p>
+          </div>
+
+          <div class="mb-4">
+            <div class="p-2 border rounded-md mb-2">
+              <label for="dataSelectionAmount" class="text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                <svg aria-hidden="true" class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path :d="icons.downArrow" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Load a Custom Dataset
+              </label>
+              <select id="dataSelectionAmount" v-model="dataSelectionAmount" @change="generateData(dataSelectionAmount)" class="cursor-pointer max-w-lg mt-2 p-2 block bg-gray-50 border border-gray-200 w-full shadow-sm sm:max-w-xs sm:text-sm rounded-md" name="dataSelectionAmount">
+                  <option :value="0" disabled hidden selected>Select a Custom Dataset</option>
+                  <option value="10">10</option>
+                  <option value="100">100</option>
+                  <option value="1000">1000</option>
+                  <option value="10000">10000</option>
+                  <option value="100000">100000</option>
+                </select>
+              </div>
+
+              <div class="border rounded-md mb-2">
+                <a @click="loadOriginalData()" href="#" class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                  <svg aria-hidden="true" class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path :d="icons.rightArrow" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  Or Load Original Dataset
+                </a>
+              </div>
+            </div>
+
+          <div class="p-2 border rounded-md">
+            <label for="dataSelectionAmount" class="text-white group flex items-center pt-2 pb-4 text-sm font-medium rounded-md">
+              <svg aria-hidden="true" class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path :d="icons.downArrow" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              {{ item.name }}
-            </a>
+              Select your sorting method:
+            </label>
+            <select id="sortMethod" v-model="selectedStrategyOption" class="cursor-pointer max-w-lg p-2 block bg-gray-50 border border-gray-200 w-full shadow-sm sm:max-w-xs sm:text-sm rounded-md" name="sortMethod">
+            <option :value="undefined" disabled hidden selected>Select a Sort Method</option>
+            <option v-for="strategy in sortingStrategies" :value="strategy">{{ strategy.name }}</option>
+            </select>
+          </div>
           </nav>
         </div>
-        <div class="flex-shrink-0 flex bg-gray-700 p-4">
-          <a href="#" class="flex-shrink-0 group block">
-          <div class="flex items-center">
-            <div>
-              <img class="inline-block h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-            </div>
-            <div class="ml-3">
-              <p class="text-base font-medium text-white">Tom Cook</p>
-              <p class="text-sm font-medium text-gray-400 group-hover:text-gray-300">View profile</p>
-            </div>
-          </div>
-          </a>
-        </div>
+        
       </div>
 
       <div class="flex-shrink-0 w-14">
@@ -99,28 +113,14 @@
     <div class="flex-1 flex flex-col min-h-0 bg-gray-800">
       <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
         <div class="flex items-center flex-shrink-0 px-4 text-3xl text-white font-bold">
-          Home
+          Project 3
         </div>
-        <nav class="flex-1 px-2 space-y-1 pt-8">
-          <a
-            v-for="item in navigation"
-            :key="item.name"
-            :href="item.href"
-            class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"
-          >
-            <svg
-              aria-hidden="true"
-              class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path :d="item.icon" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            {{ item.name }}
-          </a>         
+        <nav class="flex-1 px-2 space-y-1 pt-8">        
+          <div class="text-white pr-2 pl-4 pt-8 pb-4 border rounded-md mb-2 text-md font-medium">
+            <p>Selected method: <span class="block font-semibold pb-4">{{ selectedStrategy.name }}</span></p>
+            <p class="mb-4">Sorted By Column: <span class="font-semibold">{{ columnName }}</span></p>
+            <p>Sort Calculation Duration: <span class="block font-semibold pb-4">{{ (Math.round(sortDuration * 1000) / 1000).toFixed(3) }} Milliseconds</span></p>
+          </div>
 
           <div class="mb-4">
             <div class="p-2 border rounded-md mb-2">
@@ -171,10 +171,7 @@
   
     <!-- Mobile Toggle -->
     <div class="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
-      <button
-      class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-      type="button"
-      >
+      <button @click="showMobile = true" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" type="button">
       <span class="sr-only">Open sidebar</span>
         <svg
         aria-hidden="true"
@@ -192,14 +189,12 @@
     
     <!-- Main Container -->
     <div class="flex-1">
+      <div v-if="loading" class="bg-black bg-opacity-25 absolute h-full w-screen z-50"></div>
       <div class="py-6">       
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 class="text-center text-2xl font-semibold text-gray-900">Dashboard</h1>
+          <h1 class="text-center text-2xl font-semibold text-gray-900">Data Viewer</h1>
         </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-          <p>Selected method: {{ selectedStrategy.name }}</p>
-          <p>Sorted By Column: {{ columnName }}</p>
-          <p>Duration: {{ (Math.round(sortDuration * 1000) / 1000).toFixed(3) }} Milliseconds</p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
           <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="handleSorted"/>
         </div>
       </div>
@@ -237,6 +232,7 @@
       const sortDuration = ref(0);
       const columnName = ref("ID");
       const dataSelectionAmount = ref(0);
+      const showMobile = ref(false);
 
       const handleSorted = (sortingStrategyName: string, colName: string, resultLength: number, duration: number) => {
         sortDuration.value = duration;
@@ -274,6 +270,7 @@
         loadOriginalData,
         generateData,
         icons,
+        showMobile,
         sortDuration,
         columnName,
         dataSelectionAmount,

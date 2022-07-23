@@ -1,8 +1,8 @@
 <template>
-  <p>Index start: {{ indexStart }}</p>
+  <!-- <p>Index start: {{ indexStart }}</p>
   <p>Index end: {{ indexEnd }}</p>
   <p>Padding top: {{ paddingTop }}</p>
-  <p>Padding bottom: {{ paddingBottom }}</p>
+  <p>Padding bottom: {{ paddingBottom }}</p> -->
   <div
     :style="{'max-height': displayHeight + 'px'}"
     class="bg-gray-100 rounded-lg overflow-y-auto"
