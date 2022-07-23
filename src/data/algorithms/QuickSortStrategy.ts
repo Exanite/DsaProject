@@ -1,40 +1,48 @@
 import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
 import { Comparer } from "@/data/comparers/Comparer";
 
-type PivotSelector = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer) => T;
+type PivotIndexSelector = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer) => number;
 
-const getFirstPivot: PivotSelector = (collection, startIndex) => {
-  return collection[startIndex];
+const getFirstPivotIndex: PivotIndexSelector = (collection, startIndex) => {
+  return startIndex;
 };
 
-const getMedianOf3Pivot: PivotSelector = (collection, startIndex, endIndex, comparer) => {
-  const a = collection[startIndex];
-  const b = collection[Math.floor((startIndex + endIndex - 1) / 2)];
-  const c = collection[endIndex - 1];
+const getMedianOf3PivotIndex: PivotIndexSelector = (collection, startIndex, endIndex, comparer) => {
+  const indexA = startIndex;
+  const indexB = Math.floor((startIndex + endIndex - 1) / 2);
+  const indexC = endIndex - 1;
+  
+  const a = collection[indexA];
+  const b = collection[indexB];
+  const c = collection[indexC];
 
   comparer.compare(b, a) < 0;
 
   if (comparer.compare(a, b) > 0) {
     if (comparer.compare(a, c) < 0) {
-      return a;
+      return indexA;
     } else if (comparer.compare(b, c) > 0) {
-      return b;
+      return indexB;
     } else {
-      return c;
+      return indexC;
     }
   } else {
     if (comparer.compare(a, c) > 0) {
-      return a;
+      return indexA;
     } else if (comparer.compare(b, c) < 0) {
-      return b;
+      return indexB;
     } else {
-      return c;
+      return indexC;
     }
   }
 };
 
-const partition = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotSelector): number => {
-  const pivot = pivotSelector(collection, startIndex, endIndex, comparer);
+const getMiddlePivotIndex: PivotIndexSelector = (collection, startIndex, endIndex) => {
+  return Math.floor((startIndex + endIndex) / 2);
+}
+
+const partition = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotIndexSelector): number => {
+  const pivot = collection[pivotSelector(collection, startIndex, endIndex, comparer)];
 
   let leftIndex = startIndex;
   let rightIndex = endIndex - 1;
@@ -76,7 +84,7 @@ const partition = <T>(collection: T[], startIndex: number, endIndex: number, com
   return rightIndex;
 };
 
-const quickSort = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotSelector): T[] => {
+const quickSort = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotIndexSelector): T[] => {
   if (startIndex < endIndex) {
     const pivotIndex = partition(collection, startIndex, endIndex, comparer, pivotSelector);
 
@@ -91,7 +99,7 @@ export const QuickSortFirstStrategy: SortingStrategy = {
   name: "Quick Sort with First Element as Pivot",
 
   sort<T>(collection: T[], comparer: Comparer): T[] {
-    return quickSort(collection, 0, collection.length, comparer, getFirstPivot);
+    return quickSort(collection, 0, collection.length, comparer, getFirstPivotIndex);
   },
 };
 
@@ -99,16 +107,16 @@ export const QuickSortMedianOf3Strategy: SortingStrategy = {
   name: "Quick Sort with Median of 3 Pivot",
 
   sort<T>(collection: T[], comparer: Comparer): T[] {
-    return quickSort(collection, 0, collection.length, comparer, getMedianOf3Pivot);
+    return quickSort(collection, 0, collection.length, comparer, getMedianOf3PivotIndex);
   },
 };
 
-const arrayQuickSort = <T>(collection: T[], comparer: Comparer): T[] => {
+const arrayQuickSort = <T>(collection: T[], comparer: Comparer, pivotSelector: PivotIndexSelector): T[] => {
   if (collection.length <= 1) {
     return collection;
   }
 
-  const pivotIndex = Math.floor(collection.length / 2);
+  const pivotIndex = pivotSelector(collection, 0, collection.length, comparer);
   const pivot = collection[pivotIndex];
   const left: T[] = [];
   const right: T[] = [];
@@ -125,13 +133,13 @@ const arrayQuickSort = <T>(collection: T[], comparer: Comparer): T[] => {
     }
   }
 
-  return [...arrayQuickSort(left, comparer), pivot, ...arrayQuickSort(right, comparer)];
+  return [...arrayQuickSort(left, comparer, pivotSelector), pivot, ...arrayQuickSort(right, comparer, pivotSelector)];
 };
 
 export const ArrayQuickSortStrategy: SortingStrategy = {
-  name: "Array Quick Sort",
+  name: "Array Quick Sort with Median of 3 Pivot",
 
   sort<T>(collection: T[], comparer: Comparer): T[] {
-    return arrayQuickSort(collection, comparer);
+    return arrayQuickSort(collection, comparer, getMedianOf3PivotIndex);
   },
 };
