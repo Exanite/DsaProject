@@ -36,6 +36,6 @@ export const getMedianOf3PivotIndex: PivotIndexSelector = (collection, startInde
   }
 };
 
-const getMiddlePivotIndex: PivotIndexSelector = (collection, startIndex, endIndex) => {
+export const getMiddlePivotIndex: PivotIndexSelector = (collection, startIndex, endIndex) => {
   return Math.floor((startIndex + endIndex) / 2);
 };

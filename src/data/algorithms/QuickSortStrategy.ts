@@ -1,60 +1,75 @@
-import { getFirstPivotIndex, getMedianOf3PivotIndex, PivotIndexSelector } from "@/data/algorithms/misc/QuickSortPivots";
+import { getFirstPivotIndex, getMedianOf3PivotIndex, getMiddlePivotIndex, PivotIndexSelector } from "@/data/algorithms/misc/QuickSortPivots";
 import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
 import { Comparer } from "@/data/comparers/Comparer";
 
 const partition = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotIndexSelector): number => {
-  const pivot = collection[pivotSelector(collection, startIndex, endIndex, comparer)];
+  let temp;
+  const pivotIndex = pivotSelector(collection, startIndex, endIndex, comparer);
+  const pivot = collection[pivotIndex];
 
-  let leftIndex = startIndex;
+  // console.log(`Starting with Start ${startIndex} - End ${endIndex}`);
+  // console.log(JSON.stringify(collection));
+
+  temp = collection[startIndex];
+  collection[startIndex] = collection[pivotIndex];
+  collection[pivotIndex] = temp;
+  
+  // console.log(`Swapped Pivot ${pivotIndex} with Start ${startIndex}`);
+  // console.log(JSON.stringify(collection));
+  
+  let leftIndex = startIndex + 1;
   let rightIndex = endIndex - 1;
 
-  while (leftIndex < rightIndex) {
-    // Narrow from left to right
-    for (let i = leftIndex; i < endIndex; i++) {
-      // Stop at first left value that is out of place
-      if (comparer.compare(collection[leftIndex], pivot) > 0) {
-        break;
-      }
-
+  while (leftIndex <= rightIndex) {
+    if (comparer.compare(collection[leftIndex], pivot) < 0) {
       leftIndex++;
+
+      continue;
     }
-
-    // Narrow from right to left
-    for (let i = endIndex - 1; i > startIndex; i--) {
-      // Stop at first right value that is out of place
-      if (comparer.compare(collection[rightIndex], pivot) < 0) {
-        break;
-      }
-
+    
+    if (comparer.compare(collection[rightIndex], pivot) >= 0) {
       rightIndex--;
+      
+      continue;
     }
-
+    
     if (leftIndex < rightIndex) {
-      // Swap the two out of place values
-      const temp = collection[leftIndex];
+      temp = collection[leftIndex];
       collection[leftIndex] = collection[rightIndex];
       collection[rightIndex] = temp;
+
+      // console.log(`Swapped ${leftIndex} with ${rightIndex}`);
+      // console.log(JSON.stringify(collection));
     }
   }
 
-  // Swap pivot into place
-  const temp = collection[startIndex];
-  collection[startIndex] = collection[rightIndex];
-  collection[rightIndex] = temp;
+  temp = collection[rightIndex];
+  collection[rightIndex] = collection[startIndex];
+  collection[startIndex] = temp;
 
+  // console.log("Swapped pivot into final place");
+  // console.log(`Left ${leftIndex} - Right ${rightIndex}`);
+  // console.log("Ending");
+  // console.log(JSON.stringify(collection));
+  
   return rightIndex;
 };
 
 const quickSort = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotIndexSelector): T[] => {
-  if (startIndex < endIndex) {
-    const pivotIndex = partition(collection, startIndex, endIndex, comparer, pivotSelector);
-
-    quickSort(collection, startIndex, pivotIndex, comparer, pivotSelector);
-    quickSort(collection, pivotIndex + 1, endIndex, comparer, pivotSelector);
+  if (startIndex >= endIndex) {
+    return collection;
   }
 
+  const pivotIndex = partition(collection, startIndex, endIndex, comparer, pivotSelector);
+
+  quickSort(collection, startIndex, pivotIndex, comparer, pivotSelector);
+  quickSort(collection, pivotIndex + 1, endIndex, comparer, pivotSelector);
+  
   return collection;
 };
+
+// const collection = [8,4,2,7,6,5,9,1,0,3]
+// console.log(quickSort(collection, 0, collection.length, new Comparer(x => x), getFirstPivotIndex));
 
 export const QuickSortFirstStrategy: SortingStrategy = {
   name: "Quick Sort with First Element as Pivot",
