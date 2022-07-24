@@ -44,6 +44,7 @@
 </template>
 
 <script lang="ts">
+  import { isInOrder } from "@/data/algorithms/misc/IsInOrder";
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { Comparer } from "@/data/comparers/Comparer";
   import { FinanceDataEntry } from "@/data/FinanceData";
@@ -120,6 +121,9 @@
 
         console.log(`Sorted ${result.length} elements by ${column.name} in ${endTime - startTime} milliseconds using ${sortingStrategy.name}`);
         context.emit("sorted", sortingStrategy.name, column.name, result.length, endTime - startTime);
+
+        // For testing purposes
+        console.log(`Is correctly sorted: ${isInOrder(result, comparer)}`);
 
         return result;
       });
