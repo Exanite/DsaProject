@@ -160,6 +160,9 @@
           <p>When a new sorting method is selected, it will automatically sort by column ID.</p>
           <p class="mb-2">To sort by a different column, or to pick between ascending or descending order, select the column. </p>
           <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="handleSorted"/>
+          <div class="mt-8">
+            <BarChart/>
+          </div>
         </div>
       </div>
     </div>
@@ -169,6 +172,7 @@
 
 <script lang="ts">
   import FinanceDataTable from "@/components/FinanceDataTable.vue";
+  import BarChart from "@/components/BarChart.vue";
   import { ArrayQuickSortStrategy } from "@/data/algorithms/ArrayQuickSortStrategy";
   import { BubbleSortStrategy } from "@/data/algorithms/BubbleSortStrategy";
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
@@ -183,6 +187,7 @@
     name: "HomePage",
     components: {
       FinanceDataTable,
+      BarChart
     },
     setup() {
       const data = ref(getFinanceData());  
