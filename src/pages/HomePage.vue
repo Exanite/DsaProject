@@ -44,7 +44,7 @@
                     <option value="100000">100,000 Records</option>
                   </select>
                 </div>
-                <button @click="generateData(dataSelectionAmount)" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-white bg-gray-700 hover:bg-gray-600">
+                <button @click="generateData(dataSelectionAmount)" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-white bg-gray-700 hover:bg-gray-900">
                   <span>Load</span>
                 </button>
               </div>
@@ -113,7 +113,7 @@
                     <option value="100000">100,000 Records</option>
                   </select>
                 </div>
-                <button @click="generateData(dataSelectionAmount)" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-white bg-gray-700 hover:bg-gray-600">
+                <button @click="generateData(dataSelectionAmount)" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-white bg-gray-700 hover:bg-gray-900">
                   <span>Load</span>
                 </button>
               </div>
