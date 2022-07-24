@@ -46,28 +46,17 @@ export default defineComponent({
     plugins: {
       type: Object as PropType<PluginOptionsByType<'bar'>>,
       default: () => {}
-    }
+    },
+    data: {
+        type: Array,
+        required: true,
+      },
   },
   setup(props) {
+
     const chartData = {
-      labels: [ 'Sort' ],
-      datasets: [
-        { 
-        label: "Set 1",
-        backgroundColor: '#8888cc',
-        data: [40]
-        },
-        { 
-        label: "Set 2", 
-        backgroundColor: '#88cc88',
-        data: [20]
-        },
-        { 
-        label: "Set 3", 
-        backgroundColor: '#cc8888',
-        data: [31]
-        } 
-      ]
+      labels: [ 'Sort Methods' ],
+      datasets: props.data
     }
 
     const chartOptions = { 

@@ -161,7 +161,7 @@
           <p class="mb-2">To sort by a different column, or to pick between ascending or descending order, select the column. </p>
           <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="handleSorted"/>
           <div class="mt-8">
-            <BarChart/>
+            <BarChart :data="barChartData"/>
           </div>
         </div>
       </div>
@@ -202,6 +202,50 @@
         }
       );
 
+      //format that we can update easily using key
+      const colors = ['#cccccc', '#cc8888', '#88cc88', '#8888cc', '#cccc88', '#88cccc', '#cc88cc', '888888'];
+      const rawChartData = {
+        BuiltInSortingStrategy: {
+        label: "Built In Sorting Strategy",
+        backgroundColor: colors[0],
+        data: [40]
+        },
+        BubbleSortStrategy: {
+        label: "Bubble Sort Strategy",
+        backgroundColor: colors[1],
+        data: [15]
+        },
+        SelectionSortStrategy: {
+        label: "Selection Sort Strategy",
+        backgroundColor: colors[2],
+        data: [30]
+        },
+        QuickSortFirstStrategy: {
+        label: "Quick Sort First Strategy",
+        backgroundColor: colors[3],
+        data: [25]
+        },
+        QuickSortMedianOf3Strategy: {
+        label: "Quick Sort Median Of 3 Strategy",
+        backgroundColor: colors[4],
+        data: [38]
+        },
+        ArrayQuickSortStrategy: {
+        label: "Array Quick Sort Strategy",
+        backgroundColor: colors[5],
+        data: [12]
+        },
+      }
+      
+      //reformat to what chart.js supports
+      let barChartData: any[] = [];
+      const generateBarChartData = () => {
+        for (const [key, value] of Object.entries(rawChartData)) {
+          barChartData.push(value);
+        }
+      }
+      generateBarChartData();
+
       const handleSorted = (sortingStrategyName: string, colName: string, resultLength: number, duration: number) => {
         sortDuration.value = duration;
         columnName.value = colName;
@@ -237,7 +281,9 @@
         handleSorted,
         loadOriginalData,
         generateData,
+        generateBarChartData,
         icons,
+        barChartData,
         showMobile,
         sortDuration,
         columnName,
