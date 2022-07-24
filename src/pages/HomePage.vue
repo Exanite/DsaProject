@@ -126,6 +126,13 @@
             <option v-for="strategy in sortingStrategies" :value="strategy">{{ strategy.name }}</option>
             </select>
           </div>
+          <div class="text-white pr-2 pl-2 pt-4 pb-4 mb-2 font-medium">
+            <p class="text-md">Credits:</p>
+            <p class="text-sm">Dataset: <a target="_blank" href="https://think.cs.vt.edu/corgis/json/finance/">Corgis Dataset Project</a></p>
+            <p class="text-sm">Framework: William Chen</p>
+            <p class="text-sm">Algorithms: Carson Sobolewski</p>
+            <p class="text-sm">UI/UX: Jared Sanders</p>
+          </div>
         </nav>
       </div>
     </div>
@@ -154,13 +161,20 @@
     <div class="flex-1">
       <div class="py-6">       
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 class="text-center text-2xl font-semibold text-gray-900">Super duper, awesome title for this project. Go gators.</h1>
+          <h1 class="text-center text-3xl font-semibold text-gray-900">Analysis of Different Sort Methods</h1>
+          <p class="text-xl text-gray-600 text-center font-semibold">Finance Data provided by <a class="text-gray-700 hover:text-gray-900" target="_blank" href="https://think.cs.vt.edu/corgis/json/finance/">Corgis Dataset Project</a></p>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
-          <p>When a new sorting method is selected, it will automatically sort by column ID.</p>
-          <p class="mb-2">To sort by a different column, or to pick between ascending or descending order, select the column. </p>
-          <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="updateSortValues"/>
           <div class="mt-8">
+            <p class="text-2xl font-semibold">Table of Dataset</p>
+            <p>When a new sort method is selected, it will automatically sort by column ID.</p>
+            <p class="mb-2">To sort by a different column, or to pick between ascending or descending order, select the column. </p>
+            <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="updateSortValues"/>
+          </div>
+          <div class="mt-8">
+            <p class="text-2xl font-semibold">Bar Chart of Sort Performance</p>
+            <p>As different sort methods are selected via the sidebar, their results will populate here. When a different dataset is selected, the chart will reset.</p>
+            <p>Click on a sort method in the legend below to disable that individual bar from showing in the chart.</p>
             <BarChart :key="barChartData.length" :data="barChartData"/>
           </div>
         </div>
