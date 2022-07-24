@@ -33,25 +33,32 @@
                 </svg>
                 Load a Custom Dataset
               </label>
-              <select id="dataSelectionAmount" v-model="dataSelectionAmount" @change="generateData(dataSelectionAmount)" class="cursor-pointer max-w-lg mt-2 p-2 block bg-gray-50 border border-gray-200 w-full shadow-sm sm:max-w-xs sm:text-sm rounded-md" name="dataSelectionAmount">
-                  <option :value="0" disabled hidden selected>Select a Custom Dataset</option>
-                  <option value="10">10</option>
-                  <option value="100">100</option>
-                  <option value="1000">1000</option>
-                  <option value="10000">10000</option>
-                  <option value="100000">100000</option>
-                </select>
-              </div>
-
-              <div class="border rounded-md mb-2">
-                <a @click="loadOriginalData()" href="#" class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                  <svg aria-hidden="true" class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path :d="icons.rightArrow" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  Or Load Original Dataset
-                </a>
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <div class="relative flex items-stretch flex-grow focus-within:z-10">
+                  <select id="dataSelectionAmount" v-model="dataSelectionAmount" class="block w-full rounded-none rounded-l-md pl-2 sm:text-sm border-gray-300" name="dataSelectionAmount">
+                    <option :value="0" disabled hidden selected>Select Dataset</option>
+                    <option value="10">10 Records</option>
+                    <option value="100">100 Records</option>
+                    <option value="1000">1,000 Records</option>
+                    <option value="10000">10,000 Records</option>
+                    <option value="100000">100,000 Records</option>
+                  </select>
+                </div>
+                <button @click="generateData(dataSelectionAmount)" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-white bg-gray-700 hover:bg-gray-600">
+                  <span>Load</span>
+                </button>
               </div>
             </div>
+
+            <div class="border rounded-md mb-2">
+              <a @click="loadOriginalData()" href="#" class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                <svg aria-hidden="true" class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path :d="icons.rightArrow" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Or Load Original Dataset
+              </a>
+            </div>
+          </div>
 
           <div class="p-2 border rounded-md">
             <label for="dataSelectionAmount" class="text-white group flex items-center pt-2 pb-4 text-sm font-medium rounded-md">
@@ -94,15 +101,25 @@
                 </svg>
                 Load a Custom Dataset
               </label>
-              <select id="dataSelectionAmount" v-model="dataSelectionAmount" @change="generateData(dataSelectionAmount)" class="cursor-pointer max-w-lg mt-2 p-2 block bg-gray-50 border border-gray-200 w-full shadow-sm sm:max-w-xs sm:text-sm rounded-md" name="dataSelectionAmount">
-                  <option :value="0" disabled hidden selected>Select a Custom Dataset</option>
-                  <option value="10">10</option>
-                  <option value="100">100</option>
-                  <option value="1000">1000</option>
-                  <option value="10000">10000</option>
-                  <option value="100000">100000</option>
-                </select>
+
+              <div class="mt-1 flex rounded-md shadow-sm">
+                <div class="relative flex items-stretch flex-grow focus-within:z-10">
+                  <select id="dataSelectionAmount" v-model="dataSelectionAmount" class="focus:ring-gray-100 focus:border-gray-100 block w-full rounded-none rounded-l-md pl-2 sm:text-sm border-gray-300" name="dataSelectionAmount">
+                    <option :value="0" disabled hidden selected>Select Dataset</option>
+                    <option value="10">10 Records</option>
+                    <option value="100">100 Records</option>
+                    <option value="1000">1,000 Records</option>
+                    <option value="10000">10,000 Records</option>
+                    <option value="100000">100,000 Records</option>
+                  </select>
+                </div>
+                <button @click="generateData(dataSelectionAmount)" type="button" class="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-white bg-gray-700 hover:bg-gray-600">
+                  <span>Load</span>
+                </button>
               </div>
+            </div>
+
+              
 
               <div class="border rounded-md mb-2">
                 <a @click="loadOriginalData()" href="#" class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
@@ -141,7 +158,7 @@
   <div class="md:pl-64 flex flex-col flex-1">
     <!-- Mobile Toggle -->
     <div class="sticky top-0 z-10 md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3 bg-gray-100">
-      <button @click="showMobile = true" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" type="button">
+      <button @click="showMobile = true" class="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900" type="button">
       <span class="sr-only">Open sidebar</span>
         <svg
         aria-hidden="true"
