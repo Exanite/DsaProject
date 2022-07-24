@@ -63,7 +63,7 @@ export default defineComponent({
       }
 
     return () =>
-      h(Bar, {
+      h(Bar as any, {
         chartData,
         chartOptions,
         chartId: props.chartId,
