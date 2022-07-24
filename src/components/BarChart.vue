@@ -40,13 +40,11 @@
       },
       styles: {
         type: Object as PropType<Partial<CSSStyleDeclaration>>,
-        default: () => {
-        },
+        default: () => {},
       },
       plugins: {
         type: Object as PropType<PluginOptionsByType<"bar">>,
-        default: () => {
-        },
+        default: () => {},
       },
       data: {
         type: Array,

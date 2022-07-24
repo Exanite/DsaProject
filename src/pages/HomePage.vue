@@ -159,7 +159,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
           <p>When a new sorting method is selected, it will automatically sort by column ID.</p>
           <p class="mb-2">To sort by a different column, or to pick between ascending or descending order, select the column. </p>
-          <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="handleSorted"/>
+          <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="updateSortValues"/>
           <div class="mt-8">
             <BarChart :key="barChartData.length" :data="barChartData"/>
           </div>
@@ -203,7 +203,7 @@
       );
 
       //format that we can update easily using key
-      const colors = ['#cccccc', '#cc8888', '#88cc88', '#8888cc', '#cccc88', '#88cccc', '#cc88cc', '888888'];
+      const colors = ['#cc8888', '#88cc88', '#8888cc', '#cccc88', '#88cccc', '#cc88cc'];
       const rawChartData = reactive({
         BuiltInSortingStrategy: {
         label: "Built In Sorting Strategy",
@@ -255,7 +255,7 @@
         }
       }
 
-      const handleSorted = (sortingStrategyName: string, sortingStrategyKey: string, colName: string, resultLength: number, duration: number) => {
+      const updateSortValues = (sortingStrategyName: string, sortingStrategyKey: string, colName: string, resultLength: number, duration: number) => {
         sortDuration.value = duration;
         columnName.value = colName;
         rawChartData[sortingStrategyKey as keyof typeof rawChartData].data = [duration];
@@ -267,9 +267,8 @@
       };
 
       const generateData = (count: number) => {
-        //reset graph
         resetChartData();
-        
+          
         const generator = new DataGenerator();
         data.value = generator.generateCollection(count);
       };
@@ -291,7 +290,7 @@
 
       return {
         data,
-        handleSorted,
+        updateSortValues,
         loadOriginalData,
         generateData,
         resetChartData,
