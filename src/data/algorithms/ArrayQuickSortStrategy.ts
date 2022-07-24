@@ -29,7 +29,7 @@ const arrayQuickSort = <T>(collection: T[], comparer: Comparer, pivotSelector: P
 
 export const ArrayQuickSortStrategy: SortingStrategy = {
   name: "Array Quick Sort with Median of 3 Pivot",
-
+  key: "ArrayQuickSortStrategy",
   sort<T>(collection: T[], comparer: Comparer): T[] {
     return arrayQuickSort(collection, comparer, getMedianOf3PivotIndex);
   },

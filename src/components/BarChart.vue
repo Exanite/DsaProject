@@ -53,8 +53,7 @@ export default defineComponent({
       },
   },
   setup(props) {
-
-    const chartData = {
+    let chartData = {
       labels: [ 'Sort Methods' ],
       datasets: props.data
     }

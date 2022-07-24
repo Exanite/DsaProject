@@ -73,7 +73,7 @@ const quickSort = <T>(collection: T[], startIndex: number, endIndex: number, com
 
 export const QuickSortFirstStrategy: SortingStrategy = {
   name: "Quick Sort with First Element as Pivot",
-
+  key: "QuickSortFirstStrategy",
   sort<T>(collection: T[], comparer: Comparer): T[] {
     return quickSort(collection, 0, collection.length, comparer, getFirstPivotIndex);
   },
@@ -81,7 +81,7 @@ export const QuickSortFirstStrategy: SortingStrategy = {
 
 export const QuickSortMedianOf3Strategy: SortingStrategy = {
   name: "Quick Sort with Median of 3 Pivot",
-
+  key: "QuickSortMedianOf3Strategy",
   sort<T>(collection: T[], comparer: Comparer): T[] {
     return quickSort(collection, 0, collection.length, comparer, getMedianOf3PivotIndex);
   },

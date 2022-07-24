@@ -161,7 +161,7 @@
           <p class="mb-2">To sort by a different column, or to pick between ascending or descending order, select the column. </p>
           <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="handleSorted"/>
           <div class="mt-8">
-            <BarChart :data="barChartData"/>
+            <BarChart :key="barChartData.length" :data="barChartData"/>
           </div>
         </div>
       </div>
@@ -181,7 +181,7 @@
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
-  import { computed, defineComponent, ref } from "vue";
+  import { computed, reactive, defineComponent, ref } from "vue";
 
   export default defineComponent({
     name: "HomePage",
@@ -204,51 +204,55 @@
 
       //format that we can update easily using key
       const colors = ['#cccccc', '#cc8888', '#88cc88', '#8888cc', '#cccc88', '#88cccc', '#cc88cc', '888888'];
-      const rawChartData = {
+      const rawChartData = reactive({
         BuiltInSortingStrategy: {
         label: "Built In Sorting Strategy",
         backgroundColor: colors[0],
-        data: [40]
+        data: [0]
         },
         BubbleSortStrategy: {
         label: "Bubble Sort Strategy",
         backgroundColor: colors[1],
-        data: [15]
+        data: [0]
         },
         SelectionSortStrategy: {
         label: "Selection Sort Strategy",
         backgroundColor: colors[2],
-        data: [30]
+        data: [0]
         },
         QuickSortFirstStrategy: {
         label: "Quick Sort First Strategy",
         backgroundColor: colors[3],
-        data: [25]
+        data: [0]
         },
         QuickSortMedianOf3Strategy: {
         label: "Quick Sort Median Of 3 Strategy",
         backgroundColor: colors[4],
-        data: [38]
+        data: [0]
         },
         ArrayQuickSortStrategy: {
         label: "Array Quick Sort Strategy",
         backgroundColor: colors[5],
-        data: [12]
+        data: [0]
         },
-      }
+      });
       
-      //reformat to what chart.js supports
-      let barChartData: any[] = [];
-      const generateBarChartData = () => {
+      //reformat to what chart.js supports      
+      const barChartData = computed(() => {
+        let dataset: any[] = [];
         for (const [key, value] of Object.entries(rawChartData)) {
-          barChartData.push(value);
+          if (value.data.length != 0 && value.data[0] != 0) {
+            dataset.push(value);
+          }
         }
-      }
-      generateBarChartData();
+        console.log({dataset})
+        return dataset;
+      });
 
-      const handleSorted = (sortingStrategyName: string, colName: string, resultLength: number, duration: number) => {
+      const handleSorted = (sortingStrategyName: string, sortingStrategyKey: string, colName: string, resultLength: number, duration: number) => {
         sortDuration.value = duration;
         columnName.value = colName;
+        rawChartData[sortingStrategyKey as keyof typeof rawChartData].data = [duration];
       };
 
       const loadOriginalData = () => {
@@ -256,6 +260,12 @@
       };
 
       const generateData = (count: number) => {
+        //reset graph
+        for (const [key, value] of Object.entries(rawChartData)) {
+          value.data = [0]
+        }
+        
+
         const generator = new DataGenerator();
 
         data.value = generator.generateCollection(count);
@@ -281,7 +291,6 @@
         handleSorted,
         loadOriginalData,
         generateData,
-        generateBarChartData,
         icons,
         barChartData,
         showMobile,

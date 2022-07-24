@@ -3,6 +3,7 @@ import { Comparer } from "@/data/comparers/Comparer";
 
 export const SelectionSortStrategy: SortingStrategy = {
   name: "Selection Sort",
+  key: "SelectionSortStrategy",
   sort<T>(collection: T[], comparer: Comparer): T[] {
     
     for (let i = 0; i < collection.length - 1; i++) {

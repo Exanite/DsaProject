@@ -73,7 +73,7 @@
       },
     },
     emits: {
-      sorted: (sortingStrategyName: string, columnName: string, elementCount: number, time: number) => true,
+      sorted: (sortingStrategyName: string, sortingStrategyKey: string, columnName: string, elementCount: number, time: number) => true,
     },
     setup(props, context) {
       // Data
@@ -120,7 +120,7 @@
         const endTime = performance.now();
 
         console.log(`Sorted ${result.length} elements by ${column.name} in ${endTime - startTime} milliseconds using ${sortingStrategy.name}`);
-        context.emit("sorted", sortingStrategy.name, column.name, result.length, endTime - startTime);
+        context.emit("sorted", sortingStrategy.name, sortingStrategy.key, column.name, result.length, endTime - startTime);
 
         // For testing purposes
         console.log(`Is correctly sorted: ${isInOrder(result, comparer)}`);
