@@ -249,6 +249,12 @@
         return dataset;
       });
 
+      const resetChartData = () => {
+        for (const [key, value] of Object.entries(rawChartData)) {
+          value.data = [0]
+        }
+      }
+
       const handleSorted = (sortingStrategyName: string, sortingStrategyKey: string, colName: string, resultLength: number, duration: number) => {
         sortDuration.value = duration;
         columnName.value = colName;
@@ -257,17 +263,14 @@
 
       const loadOriginalData = () => {
         data.value = getFinanceData();
+        resetChartData();
       };
 
       const generateData = (count: number) => {
         //reset graph
-        for (const [key, value] of Object.entries(rawChartData)) {
-          value.data = [0]
-        }
+        resetChartData();
         
-
         const generator = new DataGenerator();
-
         data.value = generator.generateCollection(count);
       };
 
@@ -291,6 +294,7 @@
         handleSorted,
         loadOriginalData,
         generateData,
+        resetChartData,
         icons,
         barChartData,
         showMobile,
