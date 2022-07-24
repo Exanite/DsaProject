@@ -104,7 +104,7 @@
 
               <div class="mt-1 flex rounded-md shadow-sm">
                 <div class="relative flex items-stretch flex-grow focus-within:z-10">
-                  <select id="dataSelectionAmount" v-model="dataSelectionAmount" class="focus:ring-gray-100 focus:border-gray-100 block w-full rounded-none rounded-l-md pl-2 sm:text-sm border-gray-300" name="dataSelectionAmount">
+                  <select id="dataSelectionAmount" v-model="dataSelectionAmount" class="cursor-pointer block w-full rounded-none rounded-l-md pl-2 sm:text-sm border-gray-300" name="dataSelectionAmount">
                     <option :value="0" disabled hidden selected>Select Dataset</option>
                     <option value="10">10 Records</option>
                     <option value="100">100 Records</option>
