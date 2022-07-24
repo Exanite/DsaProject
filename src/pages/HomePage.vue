@@ -69,7 +69,7 @@
             </label>
             <select id="sortMethod" v-model="selectedStrategyOption" class="cursor-pointer max-w-lg p-2 block bg-gray-50 border border-gray-200 w-full shadow-sm sm:max-w-xs sm:text-sm rounded-md" name="sortMethod">
             <option :value="undefined" disabled hidden selected>Select a Sort Method</option>
-            <option v-for="strategy in sortingStrategies" :value="strategy">{{ strategy.name }}</option>
+            <option v-for="strategy in sortingStrategies" :key="strategy.key" :value="strategy">{{ strategy.name }}</option>
             </select>
           </div>
           </nav>
@@ -119,17 +119,15 @@
               </div>
             </div>
 
-              
-
-              <div class="border rounded-md mb-2">
-                <a @click="loadOriginalData()" href="#" class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
-                  <svg aria-hidden="true" class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path :d="icons.rightArrow" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  Or Load Original Dataset
-                </a>
-              </div>
+            <div class="border rounded-md mb-2">
+              <a @click="loadOriginalData()" href="#" class="hover:bg-gray-900 text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+                <svg aria-hidden="true" class="text-gray-300 mr-3 flex-shrink-0 h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path :d="icons.rightArrow" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Or Load Original Dataset
+              </a>
             </div>
+          </div>
 
           <div class="p-2 border rounded-md">
             <label for="dataSelectionAmount" class="text-white group flex items-center pt-2 pb-4 text-sm font-medium rounded-md">
@@ -140,7 +138,7 @@
             </label>
             <select id="sortMethod" v-model="selectedStrategyOption" class="cursor-pointer max-w-lg p-2 block bg-gray-50 border border-gray-200 w-full shadow-sm sm:max-w-xs sm:text-sm rounded-md" name="sortMethod">
             <option :value="undefined" disabled hidden selected>Select a Sort Method</option>
-            <option v-for="strategy in sortingStrategies" :value="strategy">{{ strategy.name }}</option>
+            <option v-for="strategy in sortingStrategies" :key="strategy.key" :value="strategy">{{ strategy.name }}</option>
             </select>
           </div>
           <div class="text-white pr-2 pl-2 pt-4 pb-4 mb-2 font-medium">
