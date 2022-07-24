@@ -128,7 +128,7 @@
           </div>
           <div class="text-white pr-2 pl-2 pt-4 pb-4 mb-2 font-medium">
             <p class="text-md">Credits:</p>
-            <p class="text-sm">Dataset: <a target="_blank" href="https://think.cs.vt.edu/corgis/json/finance/">Corgis Dataset Project</a></p>
+            <p class="text-sm">Dataset: Corgis Dataset Project</p>
             <p class="text-sm">Framework: William Chen</p>
             <p class="text-sm">Algorithms: Carson Sobolewski</p>
             <p class="text-sm">UI/UX: Jared Sanders</p>
