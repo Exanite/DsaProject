@@ -43,6 +43,18 @@
           comparer: new Comparer(entry => entry.year),
           generateData: elementCount => new DataGenerator().generateCollection(elementCount),
         },
+        {
+          name: "Sorted data",
+          key: "sorted",
+          comparer: new Comparer(entry => entry.id),
+          generateData: elementCount => new DataGenerator().generateCollection(elementCount),
+        },
+        {
+          name: "Reverse sorted data",
+          key: "reverse-sorted",
+          comparer: new Comparer(entry => entry.id, true),
+          generateData: elementCount => new DataGenerator().generateCollection(elementCount),
+        },
       ]);
 
       const selectedScenario = ref<ProfileScenario>(scenarios.value[0]);
@@ -62,6 +74,8 @@
           selectedScenario.value,
           selectedElementCount.value,
           selectedTrialCount.value);
+
+        console.log(results);
       };
 
       return {
