@@ -53,7 +53,7 @@
     },
     setup(props) {
       let chartData = {
-        labels: ["Sort Methods"],
+        // labels: ["Best Case", "Average Case", "Worst Case"],
         datasets: props.data,
       };
 

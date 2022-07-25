@@ -233,36 +233,80 @@
 
       //format that we can update easily using key
       const colors = ['#cc8888', '#88cc88', '#8888cc', '#cccc88', '#88cccc', '#cc88cc'];
-      const rawChartData = reactive({
+
+      interface sortData {
+        label: string;
+        backgroundColor: string;
+        data: {
+          "Best Case"?: number;
+          "Average Case"?: number;
+          "Worst Case"?: number;
+        }
+      }
+
+      interface rawSortData {
+        BuiltInSortingStrategy: sortData;
+        BubbleSortStrategy: sortData;
+        SelectionSortStrategy: sortData;
+        QuickSortFirstStrategy: sortData;
+        QuickSortMedianOf3Strategy: sortData;
+        ArrayQuickSortStrategy: sortData;
+      }
+
+      const rawChartData: rawSortData = reactive({
         BuiltInSortingStrategy: {
         label: "Built In Sorting Strategy",
         backgroundColor: colors[0],
-        data: [0]
+        data: {
+          "Best Case": undefined,
+          "Average Case": undefined,
+          "Worst Case": undefined
+        }
         },
         BubbleSortStrategy: {
         label: "Bubble Sort Strategy",
         backgroundColor: colors[1],
-        data: [0]
+        data: {
+          "Best Case": undefined,
+          "Average Case": undefined,
+          "Worst Case": undefined
+        }
         },
         SelectionSortStrategy: {
         label: "Selection Sort Strategy",
         backgroundColor: colors[2],
-        data: [0]
+        data: {
+          "Best Case": undefined,
+          "Average Case": undefined,
+          "Worst Case": undefined
+        }
         },
         QuickSortFirstStrategy: {
         label: "Quick Sort First Strategy",
         backgroundColor: colors[3],
-        data: [0]
+        data: {
+          "Best Case": undefined,
+          "Average Case": undefined,
+          "Worst Case": undefined
+        }
         },
         QuickSortMedianOf3Strategy: {
         label: "Quick Sort Median Of 3 Strategy",
         backgroundColor: colors[4],
-        data: [0]
+        data: {
+          "Best Case": undefined,
+          "Average Case": undefined,
+          "Worst Case": undefined
+        }
         },
         ArrayQuickSortStrategy: {
         label: "Array Quick Sort Strategy",
         backgroundColor: colors[5],
-        data: [0]
+        data: {
+          "Best Case": undefined,
+          "Average Case": undefined,
+          "Worst Case": undefined
+        }
         },
       });
       
@@ -270,9 +314,8 @@
       const barChartData = computed(() => {
         let dataset: any[] = [];
         for (const [key, value] of Object.entries(rawChartData)) {
-          if (value.data.length != 0 && value.data[0] != 0) {
+          console.log(value)
             dataset.push(value);
-          }
         }
         console.log({dataset})
         return dataset;
@@ -280,14 +323,41 @@
 
       const resetChartData = () => {
         for (const [key, value] of Object.entries(rawChartData)) {
-          value.data = [0]
+          value.data["Best Case"] = undefined;
+          value.data["Average Case"] = undefined;
+          value.data["Worst Case"] = undefined;
         }
       }
 
       const updateSortValues = (sortingStrategyName: string, sortingStrategyKey: string, colName: string, resultLength: number, duration: number) => {
         sortDuration.value = duration;
         columnName.value = colName;
-        rawChartData[sortingStrategyKey as keyof typeof rawChartData].data = [duration];
+
+        let oldBest = rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Best Case"];
+        let oldAverage = rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Average Case"];
+        let oldWorst = rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Worst Case"];
+
+        if (oldBest == undefined && oldAverage == undefined && oldWorst == undefined) {
+          rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Best Case"] = duration;
+          rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Average Case"] = duration;
+          rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Worst Case"] = duration;
+          return;
+        }
+
+        let b, w = false;
+        if (oldBest != undefined && oldBest > duration) {
+          rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Best Case"] = duration;
+          b = true;
+        } else if (oldWorst != undefined && oldWorst < duration) {
+          rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Worst Case"] = duration;
+          w = true;
+        }
+
+        if (b || w) {
+          let best = rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Best Case"];
+          let worst = rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Worst Case"];
+          rawChartData[sortingStrategyKey as keyof typeof rawChartData].data["Average Case"] = ((best ?? 0) + (worst ?? 0))/2;
+        }
       };
 
       const loadOriginalData = () => {
