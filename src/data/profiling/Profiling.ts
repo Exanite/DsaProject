@@ -19,8 +19,6 @@ export interface ProfileResult {
 export const profileSortStrategies = (scenario: ProfileScenario, sortStrategies: SortingStrategy[], elementCount: number, trialCount: number): ProfileResult[] => {
   const results: ProfileResult[] = [];
 
-  const originalData = scenario.generateData(elementCount);
-
   for (const sortStrategy of sortStrategies) {
     const result: ProfileResult = {
       strategy: sortStrategy,
@@ -30,11 +28,10 @@ export const profileSortStrategies = (scenario: ProfileScenario, sortStrategies:
     };
 
     for (let i = 0; i < trialCount; i++) {
-      // Not a deep clone because sorts shouldn't modify element data
-      const clonedData = [...originalData];
+      const data = scenario.generateData(elementCount);
 
       const startTime = performance.now();
-      sortStrategy.sort(clonedData, scenario.comparer);
+      sortStrategy.sort(data, scenario.comparer);
       const endTime = performance.now();
       const elapsedTime = endTime - startTime;
 
