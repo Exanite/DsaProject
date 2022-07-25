@@ -13,6 +13,14 @@
         <input :id="strategy.key" v-model="selectedSortStrategies" :value="strategy" type="checkbox">
       </label>
     </label>
+    <label>
+      Number of elements in collection:
+      <input type="number" v-model="selectedElementCount" min="1" max="1000000">
+    </label>
+    <label>
+      Number of trials to run:
+      <input type="number" v-model="selectedTrialCount" min="1" max="100">
+    </label>
     <input class="w-min cursor-pointer" type="submit" value="Run Performance Tests">
   </form>
 </template>
@@ -80,11 +88,12 @@
 
       return {
         sortStrategies: props.sortStrategies,
-
         scenarios: scenarios,
+        
         selectedScenario: selectedScenario,
-
         selectedSortStrategies: selectedSortStrategies,
+        selectedElementCount: selectedElementCount,
+        selectedTrialCount: selectedTrialCount,
 
         run: run,
       };
