@@ -1,6 +1,6 @@
-export class Comparer {
+export class Comparer<T = any> {
   constructor(
-    public getValue: (object: any) => any,
+    public getValue: (object: T) => any,
     public descending: boolean = false,
   ) {
   }
