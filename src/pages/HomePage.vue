@@ -207,6 +207,7 @@
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
   import { QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
   import { SelectionSortStrategy } from "@/data/algorithms/SelectionSortStrategy";
+  import { MergeSortStrategy } from "@/data/algorithms/MergeSortStrategy";
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
@@ -232,7 +233,7 @@
       );
 
       //format that we can update easily using key
-      const colors = ['#cc8888', '#88cc88', '#8888cc', '#cccc88', '#88cccc', '#cc88cc'];
+      const colors = ['#cc8888', '#88cc88', '#8888cc', '#cccc88', '#88cccc', '#cc88cc', '#c8c8cc'];
       const rawChartData = reactive({
         BuiltInSortingStrategy: {
         label: "Built In Sorting Strategy",
@@ -263,6 +264,11 @@
         label: "Array Quick Sort Strategy",
         backgroundColor: colors[5],
         data: [0]
+        },
+        MergeSortStrategy: {
+          label: "Merge Sort Strategy",
+          backgroundColor: colors[6],
+          data: [0]
         },
       });
       
@@ -312,6 +318,7 @@
         QuickSortFirstStrategy,
         QuickSortMedianOf3Strategy,
         ArrayQuickSortStrategy,
+        MergeSortStrategy,
       ]);
 
       const selectedStrategyOption = ref<SortingStrategy | undefined>(undefined);
