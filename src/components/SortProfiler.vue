@@ -21,7 +21,7 @@
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { Comparer } from "@/data/comparers/Comparer";
   import { DataGenerator } from "@/data/DataGenerator";
-  import { ProfileScenario, profileSortStrategies } from "@/data/profiling/Profiling";
+  import { ProfileResult, ProfileScenario, profileSortStrategies } from "@/data/profiling/Profiling";
   import { defineComponent, ref } from "vue";
 
   export default defineComponent({
@@ -32,7 +32,10 @@
         required: true,
       },
     },
-    setup(props) {
+    emits: {
+      profileFinished: (results: ProfileResult[], scenario: ProfileScenario, elementCount: number, trialCount: number) => true,
+    },
+    setup(props, context) {
       const scenarios = ref<ProfileScenario[]>([
         {
           name: "Randomized data",
@@ -44,11 +47,21 @@
 
       const selectedScenario = ref<ProfileScenario>(scenarios.value[0]);
       const selectedSortStrategies = ref<SortingStrategy[]>([...props.sortStrategies]);
+      const selectedElementCount = ref<number>(1000);
+      const selectedTrialCount = ref<number>(10);
 
       const run = () => {
-        const result = profileSortStrategies(selectedScenario.value, selectedSortStrategies.value, 2500, 10);
+        const results = profileSortStrategies(
+          selectedScenario.value,
+          selectedSortStrategies.value,
+          selectedElementCount.value,
+          selectedTrialCount.value);
 
-        console.log(result);
+        context.emit("profileFinished",
+          results,
+          selectedScenario.value,
+          selectedElementCount.value,
+          selectedTrialCount.value);
       };
 
       return {
