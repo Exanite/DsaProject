@@ -179,7 +179,7 @@
           <h1 class="text-center text-3xl font-semibold text-gray-900">Analysis of Different Sort Methods</h1>
           <p class="text-xl text-gray-600 text-center font-semibold">Finance Data provided by <a class="text-gray-700 hover:text-gray-900" target="_blank" href="https://think.cs.vt.edu/corgis/json/finance/">Corgis Dataset Project</a></p>
         </div>
-        <SortProfiler/>
+        <SortProfiler :sort-strategies="sortingStrategies"/>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
           <div class="mt-8">
             <p class="text-2xl font-semibold">Table of Dataset</p>
