@@ -3,24 +3,24 @@
     <div class="flex flex-row space-x-4">
       <div class="flex flex-col grow basis-1">
         <label class="flex flex-col justify-between pb-2">
-          <span class="font-bold">Select a scenario</span>
+          <span class="font-bold">Select a Test Scenario</span>
           <select class="block border border-gray-600 rounded" v-model="selectedScenario">
             <option v-for="scenario in scenarios" :key="scenario.key" :value="scenario">{{ scenario.name }}</option>
           </select>
         </label>
         <label class="flex flex-col justify-between pb-2">
-          <span class="font-bold">Number of elements in collection</span>
+          <span class="font-bold">Number of Elements to Test</span>
           <input class="block border border-gray-600 rounded" v-model="selectedElementCount" max="1000000" min="1" type="number">
         </label>
         <label class="flex flex-col justify-between pb-2">
-          <span class="font-bold">Number of trials to run</span>
+          <span class="font-bold">Number of Trials</span>
           <input class="block border border-gray-600 rounded" v-model="selectedTrialCount" max="100" min="1" type="number">
         </label>
       </div>
       <div class="flex flex-col grow basis-1">
         <label class="flex flex-col">
-          <span class="font-bold">Select sorts to run</span>
-          <label v-for="strategy in sortStrategies" :for="strategy.key" class="flex flex-row justify-between">
+          <span class="font-bold">Select Sorting Strategies to Test</span>
+          <label v-for="strategy in sortStrategies" :key="strategy.key" :for="strategy.key" class="flex flex-row justify-between my-1">
             <span>{{ strategy.name }}</span>
             <input :id="strategy.key" v-model="selectedSortStrategies" :value="strategy" type="checkbox">
           </label>

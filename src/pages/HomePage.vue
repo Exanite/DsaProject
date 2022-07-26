@@ -192,7 +192,7 @@
             <div class="my-2">
               <SortProfiler :sort-strategies="sortingStrategies" @clearCharts="resetChartData" @profileFinished="updateChartResults"/>
             </div>
-            <div id="performanceCharts" :class="['grid gap-2 mt-2', charts.length > 1 ? 'grid-cols-2' : 'grid-cols-1']">
+            <div id="performanceCharts" :class="['grid gap-2 mt-2', charts.length > 1 ? 'md:grid-cols-2' : 'md:grid-cols-1']">
               <div class="" v-for="chart in charts" :key="charts.length">
                 <BarChart :labels="chart.labels" :metadata="chart.metadata" :data="chart.datasets"/>
               </div>
