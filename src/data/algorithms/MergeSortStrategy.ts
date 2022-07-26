@@ -1,4 +1,4 @@
-import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
+import { SortStrategy } from "@/data/interfaces/SortStrategy";
 import { Comparer } from "@/data/comparers/Comparer";
 
 function merge<T>(collection: T[], comparer: Comparer, left: number, mid: number, right: number) {
@@ -49,7 +49,7 @@ function mergeSort<T>(collection:T[], comparer: Comparer, start: number, end: nu
     merge(collection, comparer, start, middle, end);
   }
 }
-export const MergeSortStrategy: SortingStrategy = {
+export const MergeSortStrategy: SortStrategy = {
   name: "Merge Sort",
   key: "MergeSortStrategy",
   sort<T>(collection: T[], comparer: Comparer): T[] {

@@ -1,8 +1,8 @@
 import { ProfileResult } from "@/data/interfaces/ProfileResult";
 import { ProfileScenario } from "@/data/interfaces/ProfileScenario";
-import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
+import { SortStrategy } from "@/data/interfaces/SortStrategy";
 
-export const profileSortStrategies = (scenario: ProfileScenario, sortStrategies: SortingStrategy[], elementCount: number, trialCount: number): ProfileResult[] => {
+export const profileSortStrategies = (scenario: ProfileScenario, sortStrategies: SortStrategy[], elementCount: number, trialCount: number): ProfileResult[] => {
   const results: ProfileResult[] = [];
 
   for (const sortStrategy of sortStrategies) {

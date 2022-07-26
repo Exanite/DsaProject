@@ -211,13 +211,13 @@
   import SortProfiler from "@/components/SortProfiler.vue";
   import { ArrayQuickSortStrategy } from "@/data/algorithms/ArrayQuickSortStrategy";
   import { BubbleSortStrategy } from "@/data/algorithms/BubbleSortStrategy";
-  import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
+  import { BuiltInSortStrategy } from "@/data/algorithms/BuiltInSortStrategy";
   import { QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
   import { SelectionSortStrategy } from "@/data/algorithms/SelectionSortStrategy";
   import { MergeSortStrategy } from "@/data/algorithms/MergeSortStrategy";
   import { ProfileResult } from "@/data/interfaces/ProfileResult";
   import { ProfileScenario } from "@/data/interfaces/ProfileScenario";
-  import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
+  import { SortStrategy } from "@/data/interfaces/SortStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
   import { Chart } from "@/data/interfaces/Chart";
@@ -311,9 +311,9 @@
         data.value = generator.generateCollection(count);
       };
 
-      const sortingStrategies = ref<SortingStrategy[]>([
+      const sortingStrategies = ref<SortStrategy[]>([
         // Swap these out to add new sorts
-        BuiltInSortingStrategy,
+        BuiltInSortStrategy,
         BubbleSortStrategy,
         SelectionSortStrategy,
         QuickSortFirstStrategy,
@@ -322,9 +322,9 @@
         MergeSortStrategy,
       ]);
 
-      const selectedStrategyOption = ref<SortingStrategy | undefined>(undefined);
-      const selectedStrategy = computed<SortingStrategy>(() => {
-        return selectedStrategyOption.value ?? BuiltInSortingStrategy;
+      const selectedStrategyOption = ref<SortStrategy | undefined>(undefined);
+      const selectedStrategy = computed<SortStrategy>(() => {
+        return selectedStrategyOption.value ?? BuiltInSortStrategy;
       });
 
       return {

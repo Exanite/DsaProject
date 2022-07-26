@@ -1,7 +1,7 @@
-import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
+import { SortStrategy } from "@/data/interfaces/SortStrategy";
 
 export interface ProfileResult {
-  strategy: SortingStrategy,
+  strategy: SortStrategy,
   times: number[],
   totalTime: number,
   averageTime: number,

@@ -1,6 +1,6 @@
 import { getFirstPivotIndex, getMedianOf3PivotIndex, PivotIndexSelector } from "@/data/algorithms/misc/QuickSortPivots";
 import { Comparer } from "@/data/comparers/Comparer";
-import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
+import { SortStrategy } from "@/data/interfaces/SortStrategy";
 
 const partition = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotIndexSelector): number => {
   let temp;
@@ -54,7 +54,7 @@ const quickSort = <T>(collection: T[], startIndex: number, endIndex: number, com
   return collection;
 };
 
-export const QuickSortFirstStrategy: SortingStrategy = {
+export const QuickSortFirstStrategy: SortStrategy = {
   name: "Quick Sort with First Element Pivot",
   key: "QuickSortFirstStrategy",
   sort<T>(collection: T[], comparer: Comparer): T[] {
@@ -62,7 +62,7 @@ export const QuickSortFirstStrategy: SortingStrategy = {
   },
 };
 
-export const QuickSortMedianOf3Strategy: SortingStrategy = {
+export const QuickSortMedianOf3Strategy: SortStrategy = {
   name: "Quick Sort with Median of 3 Pivot",
   key: "QuickSortMedianOf3Strategy",
   sort<T>(collection: T[], comparer: Comparer): T[] {

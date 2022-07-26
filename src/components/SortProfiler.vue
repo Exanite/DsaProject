@@ -37,7 +37,7 @@
 <script lang="ts">
   import { ProfileResult } from "@/data/interfaces/ProfileResult";
   import { ProfileScenario } from "@/data/interfaces/ProfileScenario";
-  import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
+  import { SortStrategy } from "@/data/interfaces/SortStrategy";
    import { Comparer } from "@/data/comparers/Comparer";
   import { DataGenerator } from "@/data/DataGenerator";
   import { profileSortStrategies } from "@/data/profiling/ProfileSortStrategies";
@@ -47,7 +47,7 @@
     name: "SortProfiler",
     props: {
       sortStrategies: {
-        type: Array as () => SortingStrategy[],
+        type: Array as () => SortStrategy[],
         required: true,
       },
     },
@@ -78,7 +78,7 @@
       ]);
 
       const selectedScenario = ref<ProfileScenario>(scenarios.value[0]);
-      const selectedSortStrategies = ref<SortingStrategy[]>([...props.sortStrategies]);
+      const selectedSortStrategies = ref<SortStrategy[]>([...props.sortStrategies]);
       const selectedElementCount = ref<number>(1000);
       const selectedTrialCount = ref<number>(10);
 

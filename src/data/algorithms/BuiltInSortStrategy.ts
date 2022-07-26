@@ -1,9 +1,9 @@
-import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
+import { SortStrategy } from "@/data/interfaces/SortStrategy";
 import { Comparer } from "@/data/comparers/Comparer";
 
-export const BuiltInSortingStrategy: SortingStrategy = {
+export const BuiltInSortStrategy: SortStrategy = {
   name: "JS Built-in Sort",
-  key: "BuiltInSortingStrategy",
+  key: "BuiltInSortStrategy",
   sort<T>(collection: T[], comparer: Comparer): T[] {
     return collection.sort(comparer.compare.bind(comparer));
   }

@@ -1,7 +1,7 @@
-import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
+import { SortStrategy } from "@/data/interfaces/SortStrategy";
 import { Comparer } from "@/data/comparers/Comparer";
 
-export const SelectionSortStrategy: SortingStrategy = {
+export const SelectionSortStrategy: SortStrategy = {
   name: "Selection Sort",
   key: "SelectionSortStrategy",
   sort<T>(collection: T[], comparer: Comparer): T[] {
