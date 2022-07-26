@@ -184,7 +184,7 @@
               <p class="text-2xl font-semibold">Table of Dataset</p>
               <p>When a new sort method is selected, it will automatically sort by column ID.</p>
             <p class="mb-2">To sort by a different column, or to pick between ascending or descending order, select the column. </p>
-              <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy"/>
+              <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="updateSortValues"/>
             </div>
             <div class="mt-8">
               <p class="text-2xl font-semibold">Sort Performance Profiler</p>
@@ -264,6 +264,11 @@
         'rgb(201, 203, 207)'
       ];
 
+      const updateSortValues = (sortingStrategyName: string, sortingStrategyKey: string, colName: string, resultLength: number, duration: number) => {
+        sortDuration.value = duration;
+        columnName.value = colName;
+      }
+
       const updateChartResults = (results: ProfileResult[], scenario: ProfileScenario, elementCount: number, trialCount: number) => {
         let chart: Chart = {
           labels: [],
@@ -333,6 +338,7 @@
         generateData,
         resetChartData,
         updateChartResults,
+        updateSortValues,
         icons,
         charts,
         showMobile,
