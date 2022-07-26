@@ -8,7 +8,7 @@ const getRandomInteger = (min: number = 0, max: number = 100000000): number => {
 
 export class DataGenerator {
   public currentId: number = 0;
-  
+
   public generateCollection(count: number): FinanceDataEntry[] {
     const results = [];
 

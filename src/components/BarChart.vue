@@ -11,11 +11,11 @@
       :width="width"
     />
     <div>
-      <p>Scenario: {{metadata.scenario.name}}</p>
+      <p>Scenario: {{ metadata.scenario.name }}</p>
       <p v-if="metadata.scenario.key != 'randomized'">Sort Order: {{metadata.scenario.comparer.descending ? "Ascending" : "Descending"}}</p>
       <p v-else>Sort Order: N/A</p>
-      <p>Number of Elements: {{metadata.elementCount}}</p>
-      <p>Number of Trials: {{metadata.trialCount}}</p>
+      <p>Number of Elements: {{ metadata.elementCount }}</p>
+      <p>Number of Trials: {{ metadata.trialCount }}</p>
     </div>
   </div>
 </template>
@@ -71,7 +71,7 @@
     setup(props) {
       let chartData = {
         labels: props.labels,
-        datasets: props.data
+        datasets: props.data,
       };
 
       const chartOptions = {
@@ -89,6 +89,6 @@
         styles: props.styles,
         plugins: props.plugins,
       };
-    }
-  })
+    },
+  });
 </script>

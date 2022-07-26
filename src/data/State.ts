@@ -49,7 +49,7 @@ export enum State {
   WestVirginia = "WEST VIRGINIA",
   Wisconsin = "WISCONSIN",
   Wyoming = "WYOMING",
-  
+
   UnitedStates = "UNITED STATES",
 }
 

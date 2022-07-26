@@ -45,9 +45,9 @@
 
 <script lang="ts">
   import { isInOrder } from "@/data/algorithms/misc/IsInOrder";
-  import { SortStrategy } from "@/data/interfaces/SortStrategy";
-  import { FinanceDataEntry } from "@/data/interfaces/FinanceDataEntry";
   import { Comparer } from "@/data/comparers/Comparer";
+  import { FinanceDataEntry } from "@/data/interfaces/FinanceDataEntry";
+  import { SortStrategy } from "@/data/interfaces/SortStrategy";
   import { computed, defineComponent, ref } from "vue";
 
   interface Column {

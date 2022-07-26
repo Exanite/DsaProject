@@ -35,11 +35,11 @@
 </template>
 
 <script lang="ts">
+  import { Comparer } from "@/data/comparers/Comparer";
+  import { DataGenerator } from "@/data/DataGenerator";
   import { ProfileResult } from "@/data/interfaces/ProfileResult";
   import { ProfileScenario } from "@/data/interfaces/ProfileScenario";
   import { SortStrategy } from "@/data/interfaces/SortStrategy";
-   import { Comparer } from "@/data/comparers/Comparer";
-  import { DataGenerator } from "@/data/DataGenerator";
   import { profileSortStrategies } from "@/data/profiling/ProfileSortStrategies";
   import { defineComponent, ref } from "vue";
 
@@ -53,7 +53,7 @@
     },
     emits: {
       profileFinished: (results: ProfileResult[], scenario: ProfileScenario, elementCount: number, trialCount: number) => true,
-      clearCharts: () => true
+      clearCharts: () => true,
     },
     setup(props, context) {
       const scenarios = ref<ProfileScenario[]>([
@@ -99,8 +99,8 @@
       };
 
       const clearCharts = () => {
-          context.emit("clearCharts")
-      }
+        context.emit("clearCharts");
+      };
 
       return {
         sortStrategies: props.sortStrategies,
@@ -110,7 +110,7 @@
         selectedElementCount: selectedElementCount,
         selectedTrialCount: selectedTrialCount,
         clearCharts,
-        run
+        run,
       };
     },
   });

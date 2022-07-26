@@ -1,5 +1,5 @@
 import cleanedData from "@/assets/finance_cleaned.json";
-import {FinanceDataEntry } from "@/data/interfaces/FinanceDataEntry"
+import { FinanceDataEntry } from "@/data/interfaces/FinanceDataEntry";
 import { ValidStates } from "@/data/State";
 
 // Data is from https://think.cs.vt.edu/corgis/json/finance/
@@ -17,7 +17,7 @@ export const getFinanceData = (): FinanceDataEntry[] => {
   for (let i = 0; i < results.length; i++) {
     results[i].id = i;
   }
-  
+
   return results;
 };
 
