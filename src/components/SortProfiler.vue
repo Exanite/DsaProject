@@ -52,19 +52,19 @@
     setup(props, context) {
       const scenarios = ref<ProfileScenario[]>([
         {
-          name: "Randomized data",
+          name: "Randomized Data",
           key: "randomized",
           comparer: new Comparer(entry => entry.year),
           generateData: elementCount => new DataGenerator().generateCollection(elementCount),
         },
         {
-          name: "Sorted data",
+          name: "Sorted Data",
           key: "sorted",
           comparer: new Comparer(entry => entry.id),
           generateData: elementCount => new DataGenerator().generateCollection(elementCount),
         },
         {
-          name: "Reverse sorted data",
+          name: "Reverse-Sorted Data",
           key: "reverse-sorted",
           comparer: new Comparer(entry => entry.id, true),
           generateData: elementCount => new DataGenerator().generateCollection(elementCount),
