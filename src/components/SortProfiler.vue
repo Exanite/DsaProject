@@ -1,6 +1,6 @@
 <template>
-  <form class="flex flex-col rounded border border-gray-800 p-2" v-on:submit.prevent="run">
-    <div class="flex flex-row space-x-2">
+  <form class="flex flex-col rounded border border-gray-800 py-4 px-6" v-on:submit.prevent="run">
+    <div class="flex flex-row space-x-4">
       <div class="flex flex-col grow basis-1">
         <label class="flex flex-col justify-between pb-2">
           <span class="font-bold">Select a scenario</span>
@@ -27,7 +27,10 @@
         </label>
       </div>
     </div>
-    <input class="m-auto w-min cursor-pointer bg-gray-800 rounded text-white p-1 px-2 mt-4" type="submit" value="Run Performance Tests">
+    <div class="flex justify-center gap-2">
+      <button class="cursor-pointer bg-gray-700 hover:bg-gray-900 rounded text-white py-2 px-4 mt-4" type="submit">Run Performance Tests</button>
+      <button @click="clearCharts" class="cursor-pointer bg-gray-700 hover:bg-gray-900 rounded text-white py-2 px-4 mt-4" type="button">Clear All Charts</button>
+    </div>
   </form>
 </template>
 
@@ -48,6 +51,7 @@
     },
     emits: {
       profileFinished: (results: ProfileResult[], scenario: ProfileScenario, elementCount: number, trialCount: number) => true,
+      clearCharts: () => true
     },
     setup(props, context) {
       const scenarios = ref<ProfileScenario[]>([
@@ -92,16 +96,19 @@
         console.log(results);
       };
 
+      const clearCharts = () => {
+          context.emit("clearCharts")
+      }
+
       return {
         sortStrategies: props.sortStrategies,
         scenarios: scenarios,
-
         selectedScenario: selectedScenario,
         selectedSortStrategies: selectedSortStrategies,
         selectedElementCount: selectedElementCount,
         selectedTrialCount: selectedTrialCount,
-
-        run: run,
+        clearCharts,
+        run
       };
     },
   });

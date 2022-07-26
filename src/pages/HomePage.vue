@@ -188,10 +188,10 @@
           </div>
           <div class="mt-8">
             <p class="text-2xl font-semibold">Bar Chart of Sort Performance</p>
-            <div class="my-2"><SortProfiler :sort-strategies="sortingStrategies" @profileFinished="updateChartResults"/></div>
-            <p>As different sort methods are selected via the sidebar, their results will populate here. When a different dataset is selected, the chart will reset.</p>
-            <p>Click on a sort method in the legend below to disable that individual bar from showing in the chart.</p>
-            
+            <p>As new tests are run, their results will display below.</p>
+            <div class="my-2">
+              <SortProfiler :sort-strategies="sortingStrategies" @clearCharts="resetChartData" @profileFinished="updateChartResults"/>
+            </div>
             <div id="performanceCharts" :class="['grid gap-2 mt-2', charts.length > 1 ? 'grid-cols-2' : 'grid-cols-1']">
               <div class="" v-for="chart in charts" :key="charts.length">
                 <BarChart :labels="chart.labels" :metadata="chart.metadata" :data="chart.datasets"/>
