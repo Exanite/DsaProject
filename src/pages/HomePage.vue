@@ -179,7 +179,6 @@
           <h1 class="text-center text-3xl font-semibold text-gray-900">Analysis of Different Sort Methods</h1>
           <p class="text-xl text-gray-600 text-center font-semibold">Finance Data provided by <a class="text-gray-700 hover:text-gray-900" target="_blank" href="https://think.cs.vt.edu/corgis/json/finance/">Corgis Dataset Project</a></p>
         </div>
-        <SortProfiler :sort-strategies="sortingStrategies"/>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
           <div class="mt-8">
             <p class="text-2xl font-semibold">Table of Dataset</p>
@@ -189,13 +188,15 @@
           </div>
           <div class="mt-8">
             <p class="text-2xl font-semibold">Bar Chart of Sort Performance</p>
+            <div class="my-2"><SortProfiler :sort-strategies="sortingStrategies" @profileFinished="updateChartResults"/></div>
             <p>As different sort methods are selected via the sidebar, their results will populate here. When a different dataset is selected, the chart will reset.</p>
             <p>Click on a sort method in the legend below to disable that individual bar from showing in the chart.</p>
             
-            <div id="performanceCharts">
-              <BarChart :key="barChartData" :labels="chartLabels.data" :data="barChartData"/>\
+            <div id="performanceCharts" :class="['grid', charts.length > 1 ? 'grid-cols-2' : 'grid-cols-1']">
+              <div class="" v-for="chart in charts" :key="charts.length">
+                <BarChart :labels="chart.labels" :data="chart.datasets"/>
+              </div>
             </div>
-            
           </div>
         </div>
       </div>
@@ -217,6 +218,7 @@
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
+  import { ProfileResult, ProfileScenario, profileSortStrategies } from "@/data/profiling/Profiling";
   import { computed, reactive, defineComponent, ref } from "vue";
 
   export default defineComponent({
@@ -290,40 +292,43 @@
           data: 0
         },
       });
-      
-      //reformat to what chart.js supports  
-      const chartLabels = reactive({
-        data: ['']
-      });
 
-      const getChartData = () => {
-        let datasets: any[] = [];
-        let dataset = {
+      interface Chart {
+        labels: string[];
+        datasets: {
+          label: string[];
+          data: number[];
+          backgroundColor: string[];
+          borderColor: string[];
+          borderWidth: number;
+          }[];
+        }
+
+      const charts: Chart[] = reactive([]);
+      const updateChartResults = (results: ProfileResult[], scenario: ProfileScenario, elementCount: number, trialCount: number) => {
+        console.log({results, scenario, elementCount, trialCount})
+
+        let chart: Chart = {
+          labels: [],
+          datasets: [{
           label: ["Sort Data"],
           data: [0],
           backgroundColor: backgroundColors,
           borderColor: borderColors,
           borderWidth: 1
         }
+        ]
+        };
+
         let data: number[] = [];
-        let labels:  string[] = [];
-
-        for (const [key, value] of Object.entries(rawChartData)) {
-          if (value.data != 0) {
-            labels.push(value.label);
-            data.push(value.data);
-          }
+        for (const [key, value] of Object.entries(results)) {
+          chart.labels.push(value.strategy.name);
+          data.push(value.averageTime);
         }
-        chartLabels.data = labels;
-        dataset.data = data;
-        datasets.push(dataset);
-        console.log({chartLabels})
-        return datasets;
-      }
 
-      const barChartData = computed(() => {
-        return getChartData();
-      });
+        chart.datasets[0].data = data;
+        charts.push(chart);
+      }
 
       const resetChartData = () => {
         for (const [key, value] of Object.entries(rawChartData)) {
@@ -374,9 +379,8 @@
         generateData,
         resetChartData,
         icons,
-        chartLabels,
-        getChartData,
-        barChartData,
+        charts,
+        updateChartResults,
         showMobile,
         sortDuration,
         columnName,
