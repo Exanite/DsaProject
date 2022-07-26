@@ -215,10 +215,11 @@
   import { QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
   import { SelectionSortStrategy } from "@/data/algorithms/SelectionSortStrategy";
   import { MergeSortStrategy } from "@/data/algorithms/MergeSortStrategy";
-  import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
+  import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
   import { ProfileResult, ProfileScenario } from "@/data/profiling/Profiling";
+  import { Chart } from "@/data/interfaces/Chart";
   import { computed, reactive, defineComponent, ref } from "vue";
 
   export default defineComponent({
@@ -234,6 +235,7 @@
       const columnName = ref("ID");
       const dataSelectionAmount = ref(0);
       const showMobile = ref(false);
+      const charts: Chart[] = reactive([]);
 
       const icons = ref({
           downArrow: "M19 14l-7 7m0 0l-7-7m7 7V3",
@@ -241,7 +243,6 @@
         }
       );
 
-      //format that we can update easily using key
       const backgroundColors = [
         'rgba(255, 99, 132, 0.2)',
         'rgba(255, 159, 64, 0.2)',
@@ -262,54 +263,6 @@
         'rgb(201, 203, 207)'
       ];
 
-      const rawChartData = reactive({
-        BuiltInSortingStrategy: {
-        label: "Built In Sorting Strategy",
-        data: 0
-        },
-        BubbleSortStrategy: {
-        label: "Bubble Sort Strategy",
-        data: 0
-        },
-        SelectionSortStrategy: {
-        label: "Selection Sort Strategy",
-        data: 0
-        },
-        QuickSortFirstStrategy: {
-        label: "Quick Sort First Strategy",
-        data: 0
-        },
-        QuickSortMedianOf3Strategy: {
-        label: "Quick Sort Median Of 3 Strategy",
-        data: 0
-        },
-        ArrayQuickSortStrategy: {
-        label: "Array Quick Sort Strategy",
-        data: 0
-        },
-        MergeSortStrategy: {
-          label: "Merge Sort Strategy",
-          data: 0
-        },
-      });
-
-      interface Chart {
-        labels: string[];
-        datasets: {
-          label: string[];
-          data: number[];
-          backgroundColor: string[];
-          borderColor: string[];
-          borderWidth: number;
-          }[];
-        metadata: {
-          scenario: ProfileScenario;
-          elementCount: number;
-          trialCount: number;
-        };
-        }
-
-      const charts: Chart[] = reactive([]);
       const updateChartResults = (results: ProfileResult[], scenario: ProfileScenario, elementCount: number, trialCount: number) => {
         console.log({results, scenario, elementCount, trialCount})
         let chart: Chart = {
@@ -340,20 +293,10 @@
       }
 
       const resetChartData = () => {
-        for (const [key, value] of Object.entries(rawChartData)) {
-          value.data = 0;
-        }
-
         while (charts.length > 0) {
           charts.pop();
         }
       }
-
-      const updateSortValues = (sortingStrategyName: string, sortingStrategyKey: string, colName: string, resultLength: number, duration: number) => {
-        sortDuration.value = duration;
-        columnName.value = colName;
-        rawChartData[sortingStrategyKey as keyof typeof rawChartData].data = duration;
-      };
 
       const loadOriginalData = () => {
         data.value = getFinanceData();
@@ -387,13 +330,12 @@
 
       return {
         data,
-        updateSortValues,
         loadOriginalData,
         generateData,
         resetChartData,
+        updateChartResults,
         icons,
         charts,
-        updateChartResults,
         showMobile,
         sortDuration,
         columnName,

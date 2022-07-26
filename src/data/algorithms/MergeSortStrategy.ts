@@ -1,4 +1,4 @@
-import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
+import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
 import { Comparer } from "@/data/comparers/Comparer";
 
 function merge<T>(collection: T[], comparer: Comparer, left: number, mid: number, right: number) {

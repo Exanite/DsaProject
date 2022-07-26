@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-  import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
+  import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
   import { Comparer } from "@/data/comparers/Comparer";
   import { DataGenerator } from "@/data/DataGenerator";
   import { ProfileResult, ProfileScenario, profileSortStrategies } from "@/data/profiling/Profiling";

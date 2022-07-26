@@ -1,5 +1,5 @@
 import { getFirstPivotIndex, getMedianOf3PivotIndex, getMiddlePivotIndex, PivotIndexSelector } from "@/data/algorithms/misc/QuickSortPivots";
-import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
+import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
 import { Comparer } from "@/data/comparers/Comparer";
 
 const partition = <T>(collection: T[], startIndex: number, endIndex: number, comparer: Comparer, pivotSelector: PivotIndexSelector): number => {
