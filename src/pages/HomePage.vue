@@ -334,6 +334,10 @@
         for (const [key, value] of Object.entries(rawChartData)) {
           value.data = 0;
         }
+
+        while (charts.length > 0) {
+          charts.pop();
+        }
       }
 
       const updateSortValues = (sortingStrategyName: string, sortingStrategyKey: string, colName: string, resultLength: number, duration: number) => {
