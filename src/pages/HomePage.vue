@@ -184,7 +184,7 @@
             <p class="text-2xl font-semibold">Table of Dataset</p>
             <p>When a new sort method is selected, it will automatically sort by column ID.</p>
             <p class="mb-2">To sort by a different column, or to pick between ascending or descending order, select the column. </p>
-            <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy" @sorted="updateSortValues"/>
+            <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy"/>
           </div>
           <div class="mt-8">
             <p class="text-2xl font-semibold">Bar Chart of Sort Performance</p>
