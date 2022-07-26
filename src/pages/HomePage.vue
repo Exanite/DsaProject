@@ -190,7 +190,11 @@
             <p class="text-2xl font-semibold">Bar Chart of Sort Performance</p>
             <p>As different sort methods are selected via the sidebar, their results will populate here. When a different dataset is selected, the chart will reset.</p>
             <p>Click on a sort method in the legend below to disable that individual bar from showing in the chart.</p>
-            <BarChart :key="barChartData.length" :data="barChartData"/>
+            
+            <div id="performanceCharts">
+              <BarChart :key="barChartData" :labels="chartLabels.data" :data="barChartData"/>\
+            </div>
+            
           </div>
         </div>
       </div>
@@ -233,67 +237,101 @@
       );
 
       //format that we can update easily using key
-      const colors = ['#cc8888', '#88cc88', '#8888cc', '#cccc88', '#88cccc', '#cc88cc', '#c8c8cc'];
+      const backgroundColors = [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(201, 203, 207, 0.2)'
+      ];
+
+      const borderColors = [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)'
+      ];
+
       const rawChartData = reactive({
         BuiltInSortingStrategy: {
         label: "Built In Sorting Strategy",
-        backgroundColor: colors[0],
-        data: [0]
+        data: 0
         },
         BubbleSortStrategy: {
         label: "Bubble Sort Strategy",
-        backgroundColor: colors[1],
-        data: [0]
+        data: 0
         },
         SelectionSortStrategy: {
         label: "Selection Sort Strategy",
-        backgroundColor: colors[2],
-        data: [0]
+        data: 0
         },
         QuickSortFirstStrategy: {
         label: "Quick Sort First Strategy",
-        backgroundColor: colors[3],
-        data: [0]
+        data: 0
         },
         QuickSortMedianOf3Strategy: {
         label: "Quick Sort Median Of 3 Strategy",
-        backgroundColor: colors[4],
-        data: [0]
+        data: 0
         },
         ArrayQuickSortStrategy: {
         label: "Array Quick Sort Strategy",
-        backgroundColor: colors[5],
-        data: [0]
+        data: 0
         },
         MergeSortStrategy: {
           label: "Merge Sort Strategy",
-          backgroundColor: colors[6],
-          data: [0]
+          data: 0
         },
       });
       
-      //reformat to what chart.js supports      
-      const barChartData = computed(() => {
-        let dataset: any[] = [];
+      //reformat to what chart.js supports  
+      const chartLabels = reactive({
+        data: ['']
+      });
+
+      const getChartData = () => {
+        let datasets: any[] = [];
+        let dataset = {
+          label: ["Sort Data"],
+          data: [0],
+          backgroundColor: backgroundColors,
+          borderColor: borderColors,
+          borderWidth: 1
+        }
+        let data: number[] = [];
+        let labels:  string[] = [];
+
         for (const [key, value] of Object.entries(rawChartData)) {
-          if (value.data.length != 0 && value.data[0] != 0) {
-            dataset.push(value);
+          if (value.data != 0) {
+            labels.push(value.label);
+            data.push(value.data);
           }
         }
-        console.log({dataset})
-        return dataset;
+        chartLabels.data = labels;
+        dataset.data = data;
+        datasets.push(dataset);
+        console.log({chartLabels})
+        return datasets;
+      }
+
+      const barChartData = computed(() => {
+        return getChartData();
       });
 
       const resetChartData = () => {
         for (const [key, value] of Object.entries(rawChartData)) {
-          value.data = [0]
+          value.data = 0;
         }
       }
 
       const updateSortValues = (sortingStrategyName: string, sortingStrategyKey: string, colName: string, resultLength: number, duration: number) => {
         sortDuration.value = duration;
         columnName.value = colName;
-        rawChartData[sortingStrategyKey as keyof typeof rawChartData].data = [duration];
+        rawChartData[sortingStrategyKey as keyof typeof rawChartData].data = duration;
       };
 
       const loadOriginalData = () => {
@@ -333,6 +371,8 @@
         generateData,
         resetChartData,
         icons,
+        chartLabels,
+        getChartData,
         barChartData,
         showMobile,
         sortDuration,

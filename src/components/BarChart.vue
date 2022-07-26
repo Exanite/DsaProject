@@ -46,6 +46,10 @@
         type: Object as PropType<PluginOptionsByType<"bar">>,
         default: () => {},
       },
+      labels: {
+        type: Array,
+        default: () => {},
+      },
       data: {
         type: Array,
         required: true,
@@ -53,8 +57,8 @@
     },
     setup(props) {
       let chartData = {
-        labels: ["Sort Methods"],
-        datasets: props.data,
+        labels: props.labels,
+        datasets: props.data
       };
 
       const chartOptions = {
