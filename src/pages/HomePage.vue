@@ -265,7 +265,6 @@
       ];
 
       const updateChartResults = (results: ProfileResult[], scenario: ProfileScenario, elementCount: number, trialCount: number) => {
-        console.log({results, scenario, elementCount, trialCount})
         let chart: Chart = {
           labels: [],
           datasets: [{
@@ -289,7 +288,6 @@
         }
 
         chart.datasets[0].data = data;
-        console.log({chart})
         charts.push(chart);
       }
 
