@@ -9,7 +9,7 @@
           </select>
         </label>
         <label class="flex flex-col justify-between pb-2">
-          <span class="font-bold">Number of elements in collection:</span>
+          <span class="font-bold">Number of elements in collection</span>
           <input class="block border border-gray-600 rounded" v-model="selectedElementCount" max="1000000" min="1" type="number">
         </label>
         <label class="flex flex-col justify-between pb-2">
