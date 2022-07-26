@@ -218,7 +218,7 @@
   import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
-  import { ProfileResult, ProfileScenario } from "@/data/profiling/Profiling";
+  import { ProfileResult, ProfileScenario } from "@/data/interfaces/Profiling";
   import { Chart } from "@/data/interfaces/Chart";
   import { computed, reactive, defineComponent, ref } from "vue";
 

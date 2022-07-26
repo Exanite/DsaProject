@@ -36,9 +36,10 @@
 
 <script lang="ts">
   import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
+   import { ProfileResult, ProfileScenario } from "@/data/interfaces/Profiling";
   import { Comparer } from "@/data/comparers/Comparer";
   import { DataGenerator } from "@/data/DataGenerator";
-  import { ProfileResult, ProfileScenario, profileSortStrategies } from "@/data/profiling/Profiling";
+  import { profileSortStrategies } from "@/data/profiling/Profiling";
   import { defineComponent, ref } from "vue";
 
   export default defineComponent({

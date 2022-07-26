@@ -1,20 +1,5 @@
 import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
-import { Comparer } from "@/data/comparers/Comparer";
-import { FinanceDataEntry } from "@/data/FinanceData";
-
-export interface ProfileScenario {
-  name: string,
-  key: string,
-  comparer: Comparer<FinanceDataEntry>,
-  generateData: (elementCount: number) => FinanceDataEntry[],
-}
-
-export interface ProfileResult {
-  strategy: SortingStrategy,
-  times: number[],
-  totalTime: number,
-  averageTime: number,
-}
+import { ProfileScenario, ProfileResult } from "@/data/interfaces/Profiling"
 
 export const profileSortStrategies = (scenario: ProfileScenario, sortStrategies: SortingStrategy[], elementCount: number, trialCount: number): ProfileResult[] => {
   const results: ProfileResult[] = [];

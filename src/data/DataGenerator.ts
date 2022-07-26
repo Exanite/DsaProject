@@ -1,4 +1,4 @@
-import { FinanceDataEntry } from "@/data/FinanceData";
+import { FinanceDataEntry } from "@/data/interfaces/FinanceDataEntry";
 import { ValidStates } from "@/data/State";
 
 // Min inclusive, max exclusive
