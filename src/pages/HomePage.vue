@@ -215,10 +215,11 @@
   import { QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
   import { SelectionSortStrategy } from "@/data/algorithms/SelectionSortStrategy";
   import { MergeSortStrategy } from "@/data/algorithms/MergeSortStrategy";
+  import { ProfileResult } from "@/data/interfaces/ProfileResult";
+  import { ProfileScenario } from "@/data/interfaces/ProfileScenario";
   import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
-  import { ProfileResult, ProfileScenario } from "@/data/interfaces/Profiling";
   import { Chart } from "@/data/interfaces/Chart";
   import { computed, reactive, defineComponent, ref } from "vue";
 

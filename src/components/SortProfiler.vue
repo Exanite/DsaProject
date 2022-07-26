@@ -35,11 +35,12 @@
 </template>
 
 <script lang="ts">
+  import { ProfileResult } from "@/data/interfaces/ProfileResult";
+  import { ProfileScenario } from "@/data/interfaces/ProfileScenario";
   import { SortingStrategy } from "@/data/interfaces/SortingStrategy";
-   import { ProfileResult, ProfileScenario } from "@/data/interfaces/Profiling";
-  import { Comparer } from "@/data/comparers/Comparer";
+   import { Comparer } from "@/data/comparers/Comparer";
   import { DataGenerator } from "@/data/DataGenerator";
-  import { profileSortStrategies } from "@/data/profiling/Profiling";
+  import { profileSortStrategies } from "@/data/profiling/ProfileSortStrategies";
   import { defineComponent, ref } from "vue";
 
   export default defineComponent({

@@ -1,4 +1,4 @@
-import { ProfileScenario } from "@/data/interfaces/Profiling";
+import { ProfileScenario } from "@/data/interfaces/ProfileScenario";
 
 export interface Chart {
     labels: string[];
