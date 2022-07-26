@@ -12,7 +12,6 @@
     />
     <div>
       <p>Scenario: {{ metadata.scenario.name }}</p>
-      <p v-if="metadata.scenario.key !== 'randomized'">Sort Order: {{metadata.scenario.comparer.descending ? "Ascending" : "Descending" }}</p>
       <p>Number of Elements: {{ metadata.elementCount }}</p>
       <p>Number of Trials: {{ metadata.trialCount }}</p>
     </div>
