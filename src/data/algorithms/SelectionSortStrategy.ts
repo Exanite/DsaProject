@@ -13,6 +13,7 @@ export const SelectionSortStrategy: SortStrategy = {
           min = j;
         }
       }
+      
       let temp = collection[min];
       collection[min] = collection[i];
       collection[i] = temp;
