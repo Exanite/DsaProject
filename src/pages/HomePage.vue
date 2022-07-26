@@ -192,9 +192,9 @@
             <p>As different sort methods are selected via the sidebar, their results will populate here. When a different dataset is selected, the chart will reset.</p>
             <p>Click on a sort method in the legend below to disable that individual bar from showing in the chart.</p>
             
-            <div id="performanceCharts" :class="['grid', charts.length > 1 ? 'grid-cols-2' : 'grid-cols-1']">
+            <div id="performanceCharts" :class="['grid gap-2 mt-2', charts.length > 1 ? 'grid-cols-2' : 'grid-cols-1']">
               <div class="" v-for="chart in charts" :key="charts.length">
-                <BarChart :labels="chart.labels" :data="chart.datasets"/>
+                <BarChart :labels="chart.labels" :metadata="chart.metadata" :data="chart.datasets"/>
               </div>
             </div>
           </div>
@@ -218,7 +218,7 @@
   import { SortingStrategy } from "@/data/algorithms/SortingStrategy";
   import { DataGenerator } from "@/data/DataGenerator";
   import { getFinanceData } from "@/data/FinanceData";
-  import { ProfileResult, ProfileScenario, profileSortStrategies } from "@/data/profiling/Profiling";
+  import { ProfileResult, ProfileScenario } from "@/data/profiling/Profiling";
   import { computed, reactive, defineComponent, ref } from "vue";
 
   export default defineComponent({
@@ -302,12 +302,16 @@
           borderColor: string[];
           borderWidth: number;
           }[];
+        metadata: {
+          scenario: ProfileScenario;
+          elementCount: number;
+          trialCount: number;
+        };
         }
 
       const charts: Chart[] = reactive([]);
       const updateChartResults = (results: ProfileResult[], scenario: ProfileScenario, elementCount: number, trialCount: number) => {
         console.log({results, scenario, elementCount, trialCount})
-
         let chart: Chart = {
           labels: [],
           datasets: [{
@@ -315,9 +319,13 @@
           data: [0],
           backgroundColor: backgroundColors,
           borderColor: borderColors,
-          borderWidth: 1
+          borderWidth: 1,
+        }],
+        metadata: {
+          scenario,
+          elementCount,
+          trialCount
         }
-        ]
         };
 
         let data: number[] = [];
@@ -327,6 +335,7 @@
         }
 
         chart.datasets[0].data = data;
+        console.log({chart})
         charts.push(chart);
       }
 

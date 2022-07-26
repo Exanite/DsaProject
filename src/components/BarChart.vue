@@ -1,14 +1,23 @@
 <template>
-  <Bar
-    :chart-data="chartData"
-    :chart-id="chartId"
-    :chart-options="chartOptions"
-    :css-classes="cssClasses"
-    :height="height"
-    :plugins="plugins"
-    :styles="styles"
-    :width="width"
-  />
+  <div class="border p-2">
+    <Bar
+      :chart-data="chartData"
+      :chart-id="chartId"
+      :chart-options="chartOptions"
+      :css-classes="cssClasses"
+      :height="height"
+      :plugins="plugins"
+      :styles="styles"
+      :width="width"
+    />
+    <div>
+      <p>Scenario: {{metadata.scenario.name}}</p>
+      <p v-if="metadata.scenario.key != 'randomized'">Sort Order: {{metadata.scenario.comparer.descending ? "Ascending" : "Descending"}}</p>
+      <p v-else>Sort Order: N/A</p>
+      <p>Number of Elements: {{metadata.elementCount}}</p>
+      <p>Number of Trials: {{metadata.trialCount}}</p>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -50,6 +59,10 @@
         type: Array,
         default: () => {},
       },
+      metadata: {
+        type: Object,
+        required: true,
+      },
       data: {
         type: Array,
         required: true,
@@ -68,6 +81,7 @@
       return {
         chartData,
         chartOptions,
+        metadata: props.metadata,
         chartId: props.chartId,
         width: props.width,
         height: props.height,
