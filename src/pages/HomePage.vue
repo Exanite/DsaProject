@@ -174,11 +174,12 @@
     
     <!-- Main Container -->
     <div class="flex-1">
-      <div class="py-6">       
+      <div class="py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 class="text-center text-3xl font-semibold text-gray-900">Analysis of Different Sort Methods</h1>
           <p class="text-xl text-gray-600 text-center font-semibold">Finance Data provided by <a class="text-gray-700 hover:text-gray-900" target="_blank" href="https://think.cs.vt.edu/corgis/json/finance/">Corgis Dataset Project</a></p>
         </div>
+        <SortProfiler :sort-strategies="sortingStrategies"/>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mt-4">
           <div class="mt-8">
             <p class="text-2xl font-semibold">Table of Dataset</p>
@@ -206,6 +207,7 @@
 <script lang="ts">
   import FinanceDataTable from "@/components/FinanceDataTable.vue";
   import BarChart from "@/components/BarChart.vue";
+  import SortProfiler from "@/components/SortProfiler.vue";
   import { ArrayQuickSortStrategy } from "@/data/algorithms/ArrayQuickSortStrategy";
   import { BubbleSortStrategy } from "@/data/algorithms/BubbleSortStrategy";
   import { BuiltInSortingStrategy } from "@/data/algorithms/BuiltInSortingStrategy";
@@ -220,6 +222,7 @@
   export default defineComponent({
     name: "HomePage",
     components: {
+      SortProfiler,
       FinanceDataTable,
       BarChart
     },
