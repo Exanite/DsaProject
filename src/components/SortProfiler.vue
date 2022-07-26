@@ -1,20 +1,20 @@
 <template>
   <form class="flex flex-col rounded border border-gray-800 p-2" v-on:submit.prevent="run">
-    <div class="flex flex-row">
+    <div class="flex flex-row space-x-2">
       <div class="flex flex-col grow basis-1">
-        <label class="flex flex-col justify-between">
+        <label class="flex flex-col justify-between pb-2">
           <span class="font-bold">Select a scenario</span>
-          <select v-model="selectedScenario">
+          <select class="block border border-gray-600 rounded" v-model="selectedScenario">
             <option v-for="scenario in scenarios" :key="scenario.key" :value="scenario">{{ scenario.name }}</option>
           </select>
         </label>
-        <label class="flex flex-col justify-between">
-          <span class="font-bold">Number of elements in collection:</span>
-          <input v-model="selectedElementCount" max="1000000" min="1" type="number">
+        <label class="flex flex-col justify-between pb-2">
+          <span class="font-bold">Number of elements in collection</span>
+          <input class="block border border-gray-600 rounded" v-model="selectedElementCount" max="1000000" min="1" type="number">
         </label>
-        <label class="flex flex-col justify-between">
-          <span>Number of trials to run</span>
-          <input v-model="selectedTrialCount" max="100" min="1" type="number">
+        <label class="flex flex-col justify-between pb-2">
+          <span class="font-bold">Number of trials to run</span>
+          <input class="block border border-gray-600 rounded" v-model="selectedTrialCount" max="100" min="1" type="number">
         </label>
       </div>
       <div class="flex flex-col grow basis-1">
@@ -27,7 +27,7 @@
         </label>
       </div>
     </div>
-    <input class="m-auto w-min cursor-pointer bg-gray-800 rounded text-white p-1 mt-4" type="submit" value="Run Performance Tests">
+    <input class="m-auto w-min cursor-pointer bg-gray-800 rounded text-white p-1 px-2 mt-4" type="submit" value="Run Performance Tests">
   </form>
 </template>
 
