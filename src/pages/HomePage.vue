@@ -187,7 +187,7 @@
               <FinanceDataTable :data="data" :sortingStrategy="selectedStrategy"/>
             </div>
             <div class="mt-8">
-              <p class="text-2xl font-semibold">Bar Chart of Sort Performance</p>
+              <p class="text-2xl font-semibold">Sort Performance Profiler</p>
               <p>As new tests are run, their results will display below.</p>
               <div class="my-2">
               <SortProfiler :sort-strategies="sortingStrategies" @clearCharts="resetChartData" @profileFinished="updateChartResults"/>
