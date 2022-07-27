@@ -1,5 +1,5 @@
-import { SortStrategy } from "@/data/interfaces/SortStrategy";
 import { Comparer } from "@/data/comparers/Comparer";
+import { SortStrategy } from "@/data/interfaces/SortStrategy";
 
 export const BubbleSortStrategy: SortStrategy = {
   name: "Bubble Sort",
@@ -21,5 +21,5 @@ export const BubbleSortStrategy: SortStrategy = {
       }
     }
     return collection;
-  }
-}
+  },
+};

@@ -6,6 +6,6 @@ export const isInOrder = <T>(collection: T[], comparer: Comparer): boolean => {
       return false;
     }
   }
-  
+
   return true;
-}
+};
