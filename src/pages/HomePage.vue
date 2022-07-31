@@ -212,6 +212,7 @@
   import { ArrayQuickSortStrategy } from "@/data/algorithms/ArrayQuickSortStrategy";
   import { BubbleSortStrategy } from "@/data/algorithms/BubbleSortStrategy";
   import { BuiltInSortStrategy } from "@/data/algorithms/BuiltInSortStrategy";
+  import { InsertionSortStrategy } from "@/data/algorithms/InsertionSortStrategy";
   import { MergeSortStrategy } from "@/data/algorithms/MergeSortStrategy";
   import { QuickSortFirstStrategy, QuickSortMedianOf3Strategy } from "@/data/algorithms/QuickSortStrategy";
   import { SelectionSortStrategy } from "@/data/algorithms/SelectionSortStrategy";
@@ -321,6 +322,7 @@
         BuiltInSortStrategy,
         BubbleSortStrategy,
         SelectionSortStrategy,
+        InsertionSortStrategy,
         QuickSortFirstStrategy,
         QuickSortMedianOf3Strategy,
         ArrayQuickSortStrategy,
