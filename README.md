@@ -1,29 +1,7 @@
-# dsa-project
+# Analysis of Different Sort Methods
 
-## Project setup
+Created by Carson Sobolewski, Jared Sanders, and William Chen, this project showcases multiple sorting methods and allows the user to compare the performance of each algorithm either manually or automatically by using the Sort Performance Profiler.
 
-```
-yarn install
-```
+# Credits
 
-### Compiles and hot-reloads for development
-
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-
-```
-yarn build
-```
-
-### Lints and fixes files
-
-```
-yarn lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Data provided by the [CORGIS Dataset Project](https://think.cs.vt.edu/corgis/json/finance/).
